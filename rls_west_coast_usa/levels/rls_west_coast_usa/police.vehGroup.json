@@ -1,0 +1,26 @@
+{
+  "type":"custom",
+  "data":[
+    {
+      "config":"bcpd",
+      "model":"fullsize"
+    },
+    {
+      "config":"bcpd",
+      "model":"fullsize"
+    },
+    {
+      "config":"police_v8_awd_A",
+      "model":"bastion"
+    },
+    {
+      "config":"police_passenger",
+      "model":"van"
+    }
+  ],
+  "name":"West Coast USA - Police",
+  "tags":[
+    "rls_west_coast_usa",
+    "police"
+  ]
+}

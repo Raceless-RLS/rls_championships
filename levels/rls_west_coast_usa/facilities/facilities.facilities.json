@@ -2,8 +2,8 @@
   "garages":[
     {
       "id":"servicestationGarage",
-      "name":"levels.rls_west_coast_usa.garagePoints.servicestation",
-      "description":"levels.rls_west_coast_usa.garagePoints.servicestation.description",
+      "name":"levels.west_coast_usa.garagePoints.servicestation",
+      "description":"levels.west_coast_usa.garagePoints.servicestation.description",
       "preview":"garage_servicestation.jpg",
       "zoneNames":["servicestationGarage1", "servicestationGarage2"],
       "parkingSpotNames":["serviceStationParking1", "serviceStationParking2"],
@@ -23,8 +23,8 @@
   "gasStations":[
     {
       "id":"trilobite_garage",
-      "name":"levels.rls_west_coast_usa.gasStationPoints.trilobite_garage",
-      "description":"levels.rls_west_coast_usa.gasStationPoints.trilobite_garage.description",
+      "name":"levels.west_coast_usa.gasStationPoints.trilobite_garage",
+      "description":"levels.west_coast_usa.gasStationPoints.trilobite_garage.description",
       "preview":"fuel_trilobite_garage.jpg",
       "energyTypes":["gasoline","diesel","unknown"],
       "pumps":[
@@ -81,8 +81,8 @@
       }
     }, {
       "id":"trilobite_garage_KEVee",
-      "name":"levels.rls_west_coast_usa.gasStationPoints.trilobite_garage_KEVee",
-      "description":"levels.rls_west_coast_usa.gasStationPoints.trilobite_garage_KEVee.description",
+      "name":"levels.west_coast_usa.gasStationPoints.trilobite_garage_KEVee",
+      "description":"levels.west_coast_usa.gasStationPoints.trilobite_garage_KEVee.description",
       "preview":"fuel_trilobite_garage.jpg",
       "energyTypes":["electricEnergy"],
       "pumps":[
@@ -99,8 +99,8 @@
       }
     }, {
       "id":"trilobite_city",
-      "name":"levels.rls_west_coast_usa.gasStationPoints.trilobite_city",
-      "description":"levels.rls_west_coast_usa.gasStationPoints.trilobite_city.description",
+      "name":"levels.west_coast_usa.gasStationPoints.trilobite_city",
+      "description":"levels.west_coast_usa.gasStationPoints.trilobite_city.description",
       "preview":"fuel_trilobite_city.jpg",
       "energyTypes":["gasoline","diesel","unknown"],
       "pumps":[
@@ -155,8 +155,8 @@
       }
     }, {
       "id":"trilobite_city_KEVee",
-      "name":"levels.rls_west_coast_usa.gasStationPoints.trilobite_city_KEVee",
-      "description":"levels.rls_west_coast_usa.gasStationPoints.trilobite_city_KEVee.description",
+      "name":"levels.west_coast_usa.gasStationPoints.trilobite_city_KEVee",
+      "description":"levels.west_coast_usa.gasStationPoints.trilobite_city_KEVee.description",
       "preview":"fuel_trilobite_city.jpg",
       "energyTypes":["electricEnergy"],
       "pumps":[
@@ -174,8 +174,8 @@
       }
     }, {
       "id":"apex",
-      "name":"levels.rls_west_coast_usa.gasStationPoints.apex",
-      "description":"levels.rls_west_coast_usa.gasStationPoints.apex.description",
+      "name":"levels.west_coast_usa.gasStationPoints.apex",
+      "description":"levels.west_coast_usa.gasStationPoints.apex.description",
       "preview":"fuel_apex.jpg",
       "energyTypes":["gasoline","diesel","unknown"],
       "pumps":[
@@ -232,8 +232,8 @@
       }
     }, {
       "id":"nodeoline",
-      "name":"levels.rls_west_coast_usa.gasStationPoints.nodeoline",
-      "description":"levels.rls_west_coast_usa.gasStationPoints.nodeoline.description",
+      "name":"levels.west_coast_usa.gasStationPoints.nodeoline",
+      "description":"levels.west_coast_usa.gasStationPoints.nodeoline.description",
       "preview":"fuel_nodeoline.jpg",
       "energyTypes":["gasoline","diesel","unknown"],
       "pumps":[
@@ -290,8 +290,8 @@
       }
     }, {
       "id":"tyranos_island",
-      "name":"levels.rls_west_coast_usa.gasStationPoints.tyranos_island",
-      "description":"levels.rls_west_coast_usa.gasStationPoints.tyranos_island.description",
+      "name":"levels.west_coast_usa.gasStationPoints.tyranos_island",
+      "description":"levels.west_coast_usa.gasStationPoints.tyranos_island.description",
       "preview":"fuel_tyranos_island.jpg",
       "energyTypes":["gasoline","diesel","unknown"],
       "pumps":[
@@ -346,8 +346,8 @@
       }
     }, {
       "id":"tyranos_island_KEVee",
-      "name":"levels.rls_west_coast_usa.gasStationPoints.tyranos_island_KEVee",
-      "description":"levels.rls_west_coast_usa.gasStationPoints.tyranos_island_KEVee.description",
+      "name":"levels.west_coast_usa.gasStationPoints.tyranos_island_KEVee",
+      "description":"levels.west_coast_usa.gasStationPoints.tyranos_island_KEVee.description",
       "preview":"fuel_tyranos_island.jpg",
       "energyTypes":["electricEnergy"],
       "pumps":[
@@ -364,8 +364,8 @@
       }
     },{
       "id":"tyrannos_commercial",
-      "name":"levels.rls_west_coast_usa.gasStationPoints.tyrannos_commercial",
-      "description":"levels.rls_west_coast_usa.gasStationPoints.tyrannos_commercial.description",
+      "name":"levels.west_coast_usa.gasStationPoints.tyrannos_commercial",
+      "description":"levels.west_coast_usa.gasStationPoints.tyrannos_commercial.description",
       "preview":"fuel_tyrannos_commercial.jpg",
       "energyTypes":["gasoline","diesel","unknown"],
       "pumps":[
@@ -418,8 +418,8 @@
       }
     }, {
       "id":"tyrannos_commercial_KEVee",
-      "name":"levels.rls_west_coast_usa.gasStationPoints.tyrannos_commercial_KEVee",
-      "description":"levels.rls_west_coast_usa.gasStationPoints.tyrannos_commercial_KEVee.description",
+      "name":"levels.west_coast_usa.gasStationPoints.tyrannos_commercial_KEVee",
+      "description":"levels.west_coast_usa.gasStationPoints.tyrannos_commercial_KEVee.description",
       "preview":"KEVee_tyrannos_commercial.jpg",
       "energyTypes":["electricEnergy"],
       "pumps":[

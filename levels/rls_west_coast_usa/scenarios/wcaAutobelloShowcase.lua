@@ -32,7 +32,7 @@ end
 local function onRaceWaypointReached(data, goal)
 
   if data.waypointName == 'wp27' then
-    helper.flashUiMessage('scenarios.rls_west_coast_usa.wcaAutobelloShowcase.tip_reverse', 4)
+    helper.flashUiMessage('scenarios.west_coast_usa.wcaAutobelloShowcase.tip_reverse', 4)
   end
 
 end

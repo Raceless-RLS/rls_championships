@@ -102,11 +102,11 @@ end
 
 local function scenarioOutcome()
     if playerMissionOver and escapeGoal then
-      success('scenarios.rls_west_coast_usa.busdriver_stunt.busdriver_stunt_minspeed.success.msg')
+      success('scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_minspeed.success.msg')
     elseif escapeGoal then
-      fail('scenarios.rls_west_coast_usa.busdriver_stunt.busdriver_stunt_minspeed.fail2.msg')
+      fail('scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_minspeed.fail2.msg')
     else
-      fail('scenarios.rls_west_coast_usa.busdriver_stunt.busdriver_stunt_minspeed.fail1.msg')
+      fail('scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_minspeed.fail1.msg')
     end
 end
 
@@ -259,7 +259,7 @@ local function onPreRender(dtReal, dtSim, dtRaw)
   end
 
   if bombReveal == 2 and playerVehicleData.damage > 5000 then
-      fail('scenarios.rls_west_coast_usa.busdriver_stunt.busdriver_stunt_minspeed.fail3.msg')
+      fail('scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_minspeed.fail3.msg')
   end
 
   if bombReveal and bombReveal <= 0 then

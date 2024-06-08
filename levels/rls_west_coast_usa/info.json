@@ -1,8 +1,8 @@
 {
-  "features":"levels.rls_west_coast_usa.info.features",
-  "suitablefor":"levels.rls_west_coast_usa.info.suitablefor",
+  "features":"levels.west_coast_usa.info.features",
+  "suitablefor":"levels.west_coast_usa.info.suitablefor",
   "authors":"RLS",
-  "roads":"levels.rls_west_coast_usa.info.roads",
+  "roads":"levels.west_coast_usa.info.roads",
   "title":"RLS West Coast USA",
   "description":"Alter your gameplay with RLS West Coast USA",
   "defaultSpawnPointName":"spawns_industrial",
@@ -25,91 +25,91 @@
   ],
   "spawnPoints":[
     {
-      "translationId":"levels.rls_west_coast_usa.spawnpoints.industrial",
-      "description":"levels.rls_west_coast_usa.spawnpoints.industrial.description",
-      "logbookEntry":"levels.rls_west_coast_usa.spawnpoints.industrial.logbookEntry",
+      "translationId":"levels.west_coast_usa.spawnpoints.industrial",
+      "description":"levels.west_coast_usa.spawnpoints.industrial.description",
+      "logbookEntry":"levels.west_coast_usa.spawnpoints.industrial.logbookEntry",
       "objectname":"spawns_industrial",
       "preview":"spawns_industrial.jpg"
     },
     {
-      "translationId":"levels.rls_west_coast_usa.spawnpoints.chinatown",
-      "description":"levels.rls_west_coast_usa.spawnpoints.chinatown.description",
-      "logbookEntry":"levels.rls_west_coast_usa.spawnpoints.chinatown.logbookEntry",
+      "translationId":"levels.west_coast_usa.spawnpoints.chinatown",
+      "description":"levels.west_coast_usa.spawnpoints.chinatown.description",
+      "logbookEntry":"levels.west_coast_usa.spawnpoints.chinatown.logbookEntry",
       "objectname":"spawns_chinatown",
       "preview":"spawns_chinatown.jpg"
     },
     {
-      "translationId":"levels.rls_west_coast_usa.spawnpoints.dockyards",
-      "description":"levels.rls_west_coast_usa.spawnpoints.dockyards.description",
-      "logbookEntry":"levels.rls_west_coast_usa.spawnpoints.dockyards.logbookEntry",
+      "translationId":"levels.west_coast_usa.spawnpoints.dockyards",
+      "description":"levels.west_coast_usa.spawnpoints.dockyards.description",
+      "logbookEntry":"levels.west_coast_usa.spawnpoints.dockyards.logbookEntry",
       "objectname":"spawns_dockyards",
       "preview":"spawns_dockyards.jpg"
     },
     {
-      "translationId":"levels.rls_west_coast_usa.spawnpoints.redwood_forest",
-      "description":"levels.rls_west_coast_usa.spawnpoints.redwood_forest.description",
-      "logbookEntry":"levels.rls_west_coast_usa.spawnpoints.redwood_forest.logbookEntry",
+      "translationId":"levels.west_coast_usa.spawnpoints.redwood_forest",
+      "description":"levels.west_coast_usa.spawnpoints.redwood_forest.description",
+      "logbookEntry":"levels.west_coast_usa.spawnpoints.redwood_forest.logbookEntry",
       "objectname":"spawns_redwood_forest",
       "preview":"spawns_redwood_forest.jpg"
     },
     {
-      "translationId":"levels.rls_west_coast_usa.spawnpoints.highway",
-      "description":"levels.rls_west_coast_usa.spawnpoints.highway.description",
-      "logbookEntry":"levels.rls_west_coast_usa.spawnpoints.highway.logbookEntry",
+      "translationId":"levels.west_coast_usa.spawnpoints.highway",
+      "description":"levels.west_coast_usa.spawnpoints.highway.description",
+      "logbookEntry":"levels.west_coast_usa.spawnpoints.highway.logbookEntry",
       "objectname":"spawns_highway",
       "preview":"spawns_highway.jpg"
     },
 
     {
-      "translationId":"levels.rls_west_coast_usa.spawnpoints.dirttrack",
-      "description":"levels.rls_west_coast_usa.spawnpoints.dirttrack.description",
-      "logbookEntry":"levels.rls_west_coast_usa.spawnpoints.dirttrack.logbookEntry",
+      "translationId":"levels.west_coast_usa.spawnpoints.dirttrack",
+      "description":"levels.west_coast_usa.spawnpoints.dirttrack.description",
+      "logbookEntry":"levels.west_coast_usa.spawnpoints.dirttrack.logbookEntry",
       "objectname":"spawns_dirttrack",
       "preview":"spawns_dirttrack.jpg"
     },
 
     {
-      "translationId":"levels.rls_west_coast_usa.spawnpoints.racetrack",
-      "description":"levels.rls_west_coast_usa.spawnpoints.racetrack.description",
-      "logbookEntry":"levels.rls_west_coast_usa.spawnpoints.racetrack.logbookEntry",
+      "translationId":"levels.west_coast_usa.spawnpoints.racetrack",
+      "description":"levels.west_coast_usa.spawnpoints.racetrack.description",
+      "logbookEntry":"levels.west_coast_usa.spawnpoints.racetrack.logbookEntry",
       "objectname":"spawns_racetrack",
       "preview":"spawns_racetrack.jpg"
     },
 
     {
-      "translationId":"levels.rls_west_coast_usa.spawnpoints.dragstrip",
-      "description":"levels.rls_west_coast_usa.spawnpoints.dragstrip.description",
-      "logbookEntry":"levels.rls_west_coast_usa.spawnpoints.dragstrip.logbookEntry",
+      "translationId":"levels.west_coast_usa.spawnpoints.dragstrip",
+      "description":"levels.west_coast_usa.spawnpoints.dragstrip.description",
+      "logbookEntry":"levels.west_coast_usa.spawnpoints.dragstrip.logbookEntry",
       "objectname":"spawns_dragstrip",
       "preview":"spawns_dragstrip.jpg"
     },
 
     {
-      "translationId":"levels.rls_west_coast_usa.spawnpoints.logistics",
-      "description":"levels.rls_west_coast_usa.spawnpoints.logistics.description",
-      "logbookEntry":"levels.rls_west_coast_usa.spawnpoints.logistics.logbookEntry",
+      "translationId":"levels.west_coast_usa.spawnpoints.logistics",
+      "description":"levels.west_coast_usa.spawnpoints.logistics.description",
+      "logbookEntry":"levels.west_coast_usa.spawnpoints.logistics.logbookEntry",
       "objectname":"spawns_logistics",
       "preview":"spawns_logistics.jpg"
     },
 
    {
-      "translationId":"levels.rls_west_coast_usa.spawnpoints.servicestation",
-      "description":"levels.rls_west_coast_usa.spawnpoints.servicestation.description",
-      "logbookEntry":"levels.rls_west_coast_usa.spawnpoints.servicestation.logbookEntry",
+      "translationId":"levels.west_coast_usa.spawnpoints.servicestation",
+      "description":"levels.west_coast_usa.spawnpoints.servicestation.description",
+      "logbookEntry":"levels.west_coast_usa.spawnpoints.servicestation.logbookEntry",
       "objectname":"spawns_servicestation",
       "preview":"spawns_servicestation.jpg"
     },
     {
-      "translationId":"levels.rls_west_coast_usa.spawnpoints.quarry",
-      "description":"levels.rls_west_coast_usa.spawnpoints.quarry.description",
-      "logbookEntry":"levels.rls_west_coast_usa.spawnpoints.quarry.logbookEntry",
+      "translationId":"levels.west_coast_usa.spawnpoints.quarry",
+      "description":"levels.west_coast_usa.spawnpoints.quarry.description",
+      "logbookEntry":"levels.west_coast_usa.spawnpoints.quarry.logbookEntry",
       "objectname":"spawns_quarry",
       "preview":"spawns_quarry.jpg"
     },
     {
-      "translationId":"levels.rls_west_coast_usa.spawnpoints.refinery",
-      "description":"levels.rls_west_coast_usa.spawnpoints.refinery.description",
-      "logbookEntry":"levels.rls_west_coast_usa.spawnpoints.refinery.logbookEntry",
+      "translationId":"levels.west_coast_usa.spawnpoints.refinery",
+      "description":"levels.west_coast_usa.spawnpoints.refinery.description",
+      "logbookEntry":"levels.west_coast_usa.spawnpoints.refinery.logbookEntry",
       "objectname":"spawns_refinery",
       "preview":"spawns_refinery.jpg"
     }

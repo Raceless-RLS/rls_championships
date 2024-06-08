@@ -104,9 +104,9 @@ local function onPreRender(dt)
 
     if crashTimer <= 0 and not scenarioEnd then
      if playerWon == true then
-        success('scenarios.rls_west_coast_usa.busdriver_stunt.busdriver_stunt_ballistic.win.msg')
+        success('scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_ballistic.win.msg')
       else
-        fail('scenarios.rls_west_coast_usa.busdriver_stunt.busdriver_stunt_ballistic.fail.msg')
+        fail('scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_ballistic.fail.msg')
       end
       scenarioEnd = true
     end

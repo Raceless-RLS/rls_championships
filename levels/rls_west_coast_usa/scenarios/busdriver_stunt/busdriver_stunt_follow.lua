@@ -45,13 +45,13 @@ end
 
 local function onRaceResult(outcome)
   if aiWon then
-    fail('scenarios.rls_west_coast_usa.busdriver_stunt.busdriver_stunt_follow.fail.msg')
+    fail('scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_follow.fail.msg')
   end
   if damageFail then
-    fail('scenarios.rls_west_coast_usa.busdriver_stunt.busdriver_stunt_follow.damage.msg')
+    fail('scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_follow.damage.msg')
   end
   if playerWon then
-    success('scenarios.rls_west_coast_usa.busdriver_stunt.busdriver_stunt_follow.win.msg')
+    success('scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_follow.win.msg')
   end
 end
 

@@ -1,7 +1,7 @@
 [
 {
-    "name": "scenarios.rls_west_coast_usa.wcaAutobelloShowcase.title",
-    "description": "scenarios.rls_west_coast_usa.wcaAutobelloShowcase.description",
+    "name": "scenarios.west_coast_usa.wcaAutobelloShowcase.title",
+    "description": "scenarios.west_coast_usa.wcaAutobelloShowcase.description",
     "authors": "BeamNG",
     "difficulty": "80",
     "date":  1543495427,

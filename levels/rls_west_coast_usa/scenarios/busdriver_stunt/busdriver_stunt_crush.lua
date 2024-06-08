@@ -88,21 +88,21 @@ local function scenarioJudge(scoreCard)
   statistics_statistics.setStatProgress(playerVID, damageDoneStatName, playerInstance, data)  
 
   if scoreCard <=0 then
-    fail('scenarios.rls_west_coast_usa.busdriver_stunt.busdriver_stunt_crush.failMiss.msg')
+    fail('scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_crush.failMiss.msg')
   end
 
   if crushValidity then
     if scoreCard > 0 and scoreCard < 10000 then
-      fail('scenarios.rls_west_coast_usa.busdriver_stunt.busdriver_stunt_crush.failBig.msg')
+      fail('scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_crush.failBig.msg')
     end
     if scoreCard >= 10000 and scoreCard < 40000 then
-      success('scenarios.rls_west_coast_usa.busdriver_stunt.busdriver_stunt_crush.winSmall')
+      success('scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_crush.winSmall')
     end
     if scoreCard >= 40000 then
-      success('scenarios.rls_west_coast_usa.busdriver_stunt.busdriver_stunt_crush.winBig')
+      success('scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_crush.winBig')
     end
   else
-    fail('scenarios.rls_west_coast_usa.busdriver_stunt.busdriver_stunt_crush.failInvalid.msg')
+    fail('scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_crush.failInvalid.msg')
   end
 end
 

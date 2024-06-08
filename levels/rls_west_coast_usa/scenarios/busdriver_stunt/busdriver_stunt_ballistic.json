@@ -1,7 +1,7 @@
 [
   {
-    "name": "scenarios.rls_west_coast_usa.busdriver_stunt.busdriver_stunt_ballistic.title",
-    "description": "scenarios.rls_west_coast_usa.busdriver_stunt.busdriver_stunt_ballistic.description",
+    "name": "scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_ballistic.title",
+    "description": "scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_ballistic.description",
     "authors": "BeamNG",
     "introType": "portrait",
     "portraitImg": {
@@ -9,7 +9,7 @@
       "success": "campaigns/bus_minichapter/directorportrait_face.png",
       "fail": "campaigns/bus_minichapter/directorportrait_face.png"
     },
-    "portraitText": "scenarios.rls_west_coast_usa.busdriver_stunt.busdriver_stunt_ballistic.description",
+    "portraitText": "scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_ballistic.description",
     "difficulty": "0.03",
     "date": 1519379088,
     "restrictToCampaign": true,

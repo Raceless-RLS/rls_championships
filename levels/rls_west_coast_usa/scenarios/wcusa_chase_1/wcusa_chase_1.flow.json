@@ -4,7 +4,7 @@
   "currentGraphID":120,
   "date":1702325201,
   "debugEnabled":false,
-  "description":"scenarios.rls_west_coast_usa.west_coast_chase_1.description",
+  "description":"scenarios.west_coast_usa.west_coast_chase_1.description",
   "difficulty":49,
   "frecency":{
     "node_114":1621605850,
@@ -2643,11 +2643,11 @@
             },
             "text":{
               "type":"string",
-              "value":"scenarios.rls_west_coast_usa.west_coast_chase_1.distance.description"
+              "value":"scenarios.west_coast_usa.west_coast_chase_1.distance.description"
             },
             "title":{
               "type":"string",
-              "value":"scenarios.rls_west_coast_usa.west_coast_chase_1.distance.msg"
+              "value":"scenarios.west_coast_usa.west_coast_chase_1.distance.msg"
             }
           },
           "hiddenPins":{
@@ -4629,11 +4629,11 @@
             },
             "text":{
               "type":"string",
-              "value":"scenarios.rls_west_coast_usa.west_coast_chase_1.win.description"
+              "value":"scenarios.west_coast_usa.west_coast_chase_1.win.description"
             },
             "title":{
               "type":"string",
-              "value":"scenarios.rls_west_coast_usa.west_coast_chase_1.win.msg"
+              "value":"scenarios.west_coast_usa.west_coast_chase_1.win.msg"
             }
           },
           "hiddenPins":{
@@ -5944,7 +5944,7 @@
   },
   "isScenario":false,
   "macros":{},
-  "name":"scenarios.rls_west_coast_usa.west_coast_chase_1.title",
+  "name":"scenarios.west_coast_usa.west_coast_chase_1.title",
   "savedDir":"/levels/rls_west_coast_usa/scenarios/wcusa_chase_1/",
   "savedFilename":"wcusa_chase_1.flow.json",
   "stateGraphId":120,

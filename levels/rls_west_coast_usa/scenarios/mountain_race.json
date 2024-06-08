@@ -1,7 +1,7 @@
 [
 {
-    "name": "scenarios.rls_west_coast_usa.mountain_race.title",
-    "description": "scenarios.rls_west_coast_usa.mountain_race.description",
+    "name": "scenarios.west_coast_usa.mountain_race.title",
+    "description": "scenarios.west_coast_usa.mountain_race.description",
     "authors": "BeamNG",
     "introType": "none",
     "difficulty": "80",

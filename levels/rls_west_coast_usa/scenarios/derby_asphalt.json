@@ -1,7 +1,7 @@
 [
   {
-    "name": "scenarios.rls_west_coast_usa.derby_asphalt.title",
-    "description": "scenarios.rls_west_coast_usa.derby_asphalt.description",
+    "name": "scenarios.west_coast_usa.derby_asphalt.title",
+    "description": "scenarios.west_coast_usa.derby_asphalt.description",
     "authors": "BeamNG",
     "introType": "none",
     "difficulty": "22",

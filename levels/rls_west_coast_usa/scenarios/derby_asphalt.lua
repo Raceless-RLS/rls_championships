@@ -95,9 +95,9 @@ end
 
 local function onRaceResult()
   if playerWon then
-    success('scenarios.rls_west_coast_usa.derby_asphalt.win.msg')
+    success('scenarios.west_coast_usa.derby_asphalt.win.msg')
   else
-    fail('scenarios.rls_west_coast_usa.derby_asphalt.fail.msg')
+    fail('scenarios.west_coast_usa.derby_asphalt.fail.msg')
   end
 end
 
@@ -105,7 +105,7 @@ local function onVehicleStoppedMoving(vehicleID, damaged)
   if running then
     local playerVehicleID = scenetree.findObject(playerInstance):getID()
     if vehicleID == playerVehicleID and damaged and not playerWon then
-      fail('scenarios.rls_west_coast_usa.derby_asphalt.fail.msg')
+      fail('scenarios.west_coast_usa.derby_asphalt.fail.msg')
     end
   end
 end

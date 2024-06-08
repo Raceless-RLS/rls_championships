@@ -1,7 +1,7 @@
 [
 {
-    "name": "scenarios.rls_west_coast_usa.busdriver_stunt.busdriver_stunt_minspeed.title",
-    "description": "scenarios.rls_west_coast_usa.busdriver_stunt.busdriver_stunt_minspeed.description",
+    "name": "scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_minspeed.title",
+    "description": "scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_minspeed.description",
     "authors": "BeamNG",
     "introType": "portrait",
     "portraitImg": {
@@ -9,7 +9,7 @@
         "success": "campaigns/bus_minichapter/directorportrait_face.png"
 
     },
-    "portraitText": "scenarios.rls_west_coast_usa.busdriver_stunt.busdriver_stunt_minspeed.description",
+    "portraitText": "scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_minspeed.description",
     "difficulty": "0.03",
     "date": 1519379080,
     "restrictToCampaign": true,

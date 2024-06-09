@@ -9,7 +9,7 @@
       "dropOffSpotNames":["belascoGarage_parking"],
       "trailerSpotNames":["belascoGarage_trailer"],
       "sitesFile":"mechanics.sites.json",
-      "logisticTypesProvided":["mechanicalParts","vehNeedsRepair","vehForPrivate","vehRepairFinished"],
+      "logisticTypesProvided":["parcel","mechanicalParts","vehNeedsRepair","vehForPrivate","vehRepairFinished"],
       "logisticTypesReceived":["mechanicalParts", "parcel", "food","vehNeedsRepair"],
       "logisticMaxItems":20,
       "logisticGenerators":[
@@ -70,7 +70,7 @@
       "dropOffSpotNames":["fastAutomotive_parking"],
       "trailerSpotNames":["fastAutomotive_trailer"],
       "sitesFile":"mechanics.sites.json",
-      "logisticTypesProvided":["mechanicalParts","vehNeedsRepair","vehForPrivate","vehRepairFinished"],
+      "logisticTypesProvided":["parcel","mechanicalParts","vehNeedsRepair","vehForPrivate","vehRepairFinished"],
       "logisticTypesReceived":["mechanicalParts", "parcel", "food","vehNeedsRepair","vehLargeTruck"],
       "logisticMaxItems":20,
       "logisticGenerators":[
@@ -132,7 +132,7 @@
       "dropOffSpotNames":["exhaustShop_parking"],
       "trailerSpotNames":["exhaustShop_trailer"],
       "sitesFile":"mechanics.sites.json",
-      "logisticTypesProvided":["mechanicalParts","vehNeedsRepair","vehForPrivate","vehRepairFinished"],
+      "logisticTypesProvided":["parcel","mechanicalParts","vehNeedsRepair","vehForPrivate","vehRepairFinished"],
       "logisticTypesReceived":["mechanicalParts", "parcel", "food","vehNeedsRepair","vehLargeTruck","vehLargeTruckNeedsRepair"],
       "logisticMaxItems":20,
       "logisticGenerators":[
@@ -203,7 +203,7 @@
       "dropOffSpotNames":["torresTires_parking"],
       "trailerSpotNames":["torresTires_trailer"],
       "sitesFile":"mechanics.sites.json",
-      "logisticTypesProvided":["mechanicalParts","vehNeedsRepair","vehForPrivate","vehRepairFinished"],
+      "logisticTypesProvided":["parcel","mechanicalParts","vehNeedsRepair","vehForPrivate","vehRepairFinished"],
       "logisticTypesReceived":["mechanicalParts", "parcel", "food","vehNeedsRepair","vehLargeTruck","vehLargeTruckNeedsRepair"],
       "logisticMaxItems":20,
       "logisticGenerators":[
@@ -274,7 +274,7 @@
       "dropOffSpotNames":["smashAutoRepairs_parking"],
       "trailerSpotNames":["smashAutoRepairs_trailer"],
       "sitesFile":"mechanics.sites.json",
-      "logisticTypesProvided":["mechanicalParts","vehNeedsRepair","vehForPrivate","vehRepairFinished"],
+      "logisticTypesProvided":["parcel","mechanicalParts","vehNeedsRepair","vehForPrivate","vehRepairFinished"],
       "logisticTypesReceived":["mechanicalParts", "parcel", "food","vehNeedsRepair"],
       "logisticMaxItems":20,
       "logisticGenerators":[
@@ -345,7 +345,7 @@
       "dropOffSpotNames":["jerryRigs_parking"],
       "trailerSpotNames":["jerryRigs_trailer"],
       "sitesFile":"mechanics.sites.json",
-      "logisticTypesProvided":["mechanicalParts","vehNeedsRepair","vehForPrivate","vehRepairFinished"],
+      "logisticTypesProvided":["parcel","mechanicalParts","vehNeedsRepair","vehForPrivate","vehRepairFinished"],
       "logisticTypesReceived":["mechanicalParts", "parcel", "food","vehNeedsRepair"],
       "logisticMaxItems":20,
       "logisticGenerators":[
@@ -416,7 +416,7 @@
       "dropOffSpotNames":["shuffleboardLogistics_parking"],
       "trailerSpotNames":["shuffleboardLogistics_trailer"],
       "sitesFile":"mechanics.sites.json",
-      "logisticTypesProvided":["mechanicalParts","vehNeedsRepair","vehForPrivate","vehRepairFinished", "vehDeliveryAmbulance","vehLargeTruck","vehLargeTruckNeedsRepair"],
+      "logisticTypesProvided":["parcel","mechanicalParts","vehNeedsRepair","vehForPrivate","vehRepairFinished", "vehDeliveryAmbulance","vehLargeTruck","vehLargeTruckNeedsRepair"],
       "logisticTypesReceived":["mechanicalParts", "parcel", "food","vehNeedsRepair","vehLargeTruck","vehLargeTruckNeedsRepair"],
       "logisticMaxItems":20,
       "logisticGenerators":[
@@ -488,7 +488,7 @@
       "dropOffSpotNames":["quarrysideAutoSales_parking"],
       "trailerSpotNames":["quarrysideAutoSales_trailer"],
       "sitesFile":"mechanics.sites.json",
-      "logisticTypesProvided":["mechanicalParts","rareMechanicalParts","vehNeedsRepair","vehForPrivate","vehRepairFinished"],
+      "logisticTypesProvided":["parcel","mechanicalParts","rareMechanicalParts","vehNeedsRepair","vehForPrivate","vehRepairFinished"],
       "logisticTypesReceived":["mechanicalParts","rareMechanicalParts" "parcel", "food","vehRepairFinished"],
       "logisticMaxItems":20,
       "logisticGenerators":[
@@ -551,7 +551,7 @@
       "dropOffSpotNames":["belascoAuto_parking"],
       "trailerSpotNames":["belascoAuto_trailer"],
       "sitesFile":"mechanics.sites.json",
-      "logisticTypesProvided":["mechanicalParts","rareMechanicalParts","vehNeedsRepair","vehForPrivate"],
+      "logisticTypesProvided":["parcel","mechanicalParts","rareMechanicalParts","vehNeedsRepair","vehForPrivate"],
       "logisticTypesReceived":["mechanicalParts","rareMechanicalParts" "parcel", "food","trailer","vehRepairFinished"],
       "logisticMaxItems":20,
       "logisticGenerators":[
@@ -616,7 +616,7 @@
       "dropOffSpotNames":["jeffersonMotors_parking"],
       "trailerSpotNames":["jeffersonMotors_trailer"],
       "sitesFile":"mechanics.sites.json",
-      "logisticTypesProvided":["mechanicalParts","rareMechanicalParts","vehNeedsRepair","vehForPrivate","vehDeliveryPolice"],
+      "logisticTypesProvided":["parcel","mechanicalParts","rareMechanicalParts","vehNeedsRepair","vehForPrivate","vehDeliveryPolice"],
       "logisticTypesReceived":["mechanicalParts","rareMechanicalParts" "parcel", "food","trailer","vehRepairFinished"],
       "logisticMaxItems":20,
       "logisticGenerators":[
@@ -689,7 +689,7 @@
       "dropOffSpotNames":["richsMotorCompany_parking"],
       "trailerSpotNames":["richsMotorCompany_trailer"],
       "sitesFile":"mechanics.sites.json",
-      "logisticTypesProvided":["mechanicalParts","rareMechanicalParts","vehNeedsRepair","vehForPrivate"],
+      "logisticTypesProvided":["parcel","mechanicalParts","rareMechanicalParts","vehNeedsRepair","vehForPrivate"],
       "logisticTypesReceived":["mechanicalParts","rareMechanicalParts" "parcel", "food","trailer","vehRepairFinished"],
       "logisticMaxItems":20,
       "logisticGenerators":[

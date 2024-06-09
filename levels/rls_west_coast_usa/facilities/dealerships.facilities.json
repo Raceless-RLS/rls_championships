@@ -247,7 +247,7 @@
       "id": "private",
       "name": "Private",
       "filter": {
-        "whiteList":{"Mileage":{"min":20000000, "max":165000000}},
+        "whiteList":{"Mileage":{"min":20000000, "max":165000000}, "Value":{"min":450}},
         "blackList":{"Type":["Trailer", "Truck"]}
       }
     }

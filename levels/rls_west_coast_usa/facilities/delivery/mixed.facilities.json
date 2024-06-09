@@ -145,7 +145,7 @@
       "trailerSpotNames":["hotrolled_trailer"],
       "sitesFile":"mixed.sites.json",
       "showIncomingCargo":true,
-      "logisticTypesProvided":["industrial","trailerDeliveryConstructionMaterials","vehLargeTruck","vehLargeTruckNeedsRepair"],
+      "logisticTypesProvided":["parcel","industrial","trailerDeliveryConstructionMaterials","vehLargeTruck","vehLargeTruckNeedsRepair"],
       "logisticTypesReceived":["industrial","parcel","trailerDeliveryConstructionMaterials","vehLargeTruck"],
       "logisticGenerators":[
         {
@@ -213,7 +213,7 @@
       "trailerSpotNames":["quarry_trailer"],
       "sitesFile":"mixed.sites.json",
       "showIncomingCargo":true,
-      "logisticTypesProvided":["industrial", "trailerDeliveryConstructionMaterials","vehLargeTruck","vehLargeTruckNeedsRepair"],
+      "logisticTypesProvided":["parcel","industrial", "trailerDeliveryConstructionMaterials","vehLargeTruck","vehLargeTruckNeedsRepair"],
       "logisticTypesReceived":["industrial","parcel","trailerDeliveryConstructionMaterials","vehLargeTruck"],
       "logisticGenerators":[
         {
@@ -283,7 +283,7 @@
       "trailerSpotNames":["sealbrik_trailer"],
       "sitesFile":"mixed.sites.json",
       "showIncomingCargo":true,
-      "logisticTypesProvided":["industrial", "trailerDeliveryConstructionMaterials","vehLargeTruck","vehLargeTruckNeedsRepair"],
+      "logisticTypesProvided":["parcel","industrial", "trailerDeliveryConstructionMaterials","vehLargeTruck","vehLargeTruckNeedsRepair"],
       "logisticTypesReceived":["industrial","parcel","trailerDeliveryConstructionMaterials","vehLargeTruck"],
       "logisticGenerators":[
         {
@@ -380,7 +380,7 @@
       "trailerSpotNames":["lensflareLogistics_trailer"],
       "sitesFile":"mixed.sites.json",
       "showIncomingCargo":true,
-      "logisticTypesProvided":["industrial"],
+      "logisticTypesProvided":["parcel","industrial"],
       "logisticTypesReceived":["industrial","parcel","trailerDeliveryConstructionMaterials","vehLargeTruck"],
       "logisticGenerators":[
         {
@@ -409,7 +409,7 @@
       "trailerSpotNames":["refinery_logistics_trailer"],
       "sitesFile":"mixed.sites.json",
       "showIncomingCargo":true,
-      "logisticTypesProvided":["industrial", "trailerDeliveryConstructionMaterials","vehLargeTruck","vehLargeTruckNeedsRepair"],
+      "logisticTypesProvided":["parcel","industrial", "trailerDeliveryConstructionMaterials","vehLargeTruck","vehLargeTruckNeedsRepair"],
       "logisticTypesReceived":["industrial","parcel","trailerDeliveryConstructionMaterials","vehLargeTruck"],
       "logisticGenerators":[
         {
@@ -478,7 +478,7 @@
       "trailerSpotNames":["pier_trailer"],
       "sitesFile":"mixed.sites.json",
       "showIncomingCargo":true,
-      "logisticTypesProvided":["industrial", "trailerDeliveryConstructionMaterials","vehLargeTruck","vehLargeTruckNeedsRepair"],
+      "logisticTypesProvided":["parcel","industrial", "trailerDeliveryConstructionMaterials","vehLargeTruck","vehLargeTruckNeedsRepair"],
       "logisticTypesReceived":["industrial","parcel","trailerDeliveryConstructionMaterials","vehLargeTruck","vehLargeTruckNeedsRepair"],
       "logisticGenerators":[
         {

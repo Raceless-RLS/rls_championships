@@ -282,3 +282,6 @@
 {"class":"DecalRoad","persistentId":"d1e69fa7-6752-4828-88bb-522a07abd93e","__parent":"MissionGroup","position":[420.642548,-589.42157,173.750168],"improvedSpline":true,"material":"spraypaint_mark","nodes":[[420.642548,-589.42157,173.750168,0.5],[421.724854,-582.037109,173.534912,0.5]],"startEndFade":[2,2]}
 {"class":"DecalRoad","persistentId":"cfbfb85b-a8f0-4dfc-b33e-2075ab42665c","__parent":"MissionGroup","position":[421.532867,-612.328857,169.916183],"improvedSpline":true,"material":"spraypaint_mark","nodes":[[421.532867,-612.328857,169.916183,0.5],[422.080261,-605.852295,170.420975,0.5]],"startEndFade":[2,2]}
 {"class":"DecalRoad","persistentId":"064a1d63-8a60-47a9-9f4c-5dae658f837a","__parent":"MissionGroup","position":[425.424744,-621.768433,169.504974],"improvedSpline":true,"material":"spraypaint_mark","nodes":[[425.424744,-621.768433,169.504974,0.5],[423.28949,-630.366943,167.957977,0.5]],"startEndFade":[2,2]}
+{"name":"rockcrawlm","class":"SimGroup","persistentId":"531db295-4c7f-457a-b614-55dbbf024767","__parent":"MissionGroup"}
+{"name":"hillclimb","class":"SimGroup","persistentId":"fd93abf8-9c44-445b-9561-d18a48f2ee91","__parent":"MissionGroup"}
+{"name":"muddrag","class":"SimGroup","persistentId":"2cce9271-c7e5-4c1c-bfba-d6540f6a901b","__parent":"MissionGroup"}

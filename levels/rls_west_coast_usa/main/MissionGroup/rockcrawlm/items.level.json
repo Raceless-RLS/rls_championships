@@ -1,0 +1,2 @@
+{"name":"rockcrawlm_start","class":"BeamNGTrigger","persistentId":"2bc4f1f9-5090-4693-a6a4-a64757fb8ed0","__parent":"rockcrawlm","position":[438.830017,-499.12149,152.323257],"rotationMatrix":[0.999472558,-0.0324747823,0,0.0324747823,0.999472558,0,0,0,1],"scale":[10.0697756,0.757421851,1]}
+{"name":"rockcrawlm_finish","class":"BeamNGTrigger","persistentId":"f8be9551-b090-4a01-9299-edf132314649","__parent":"rockcrawlm","position":[441.987549,-554.881836,167.988708],"scale":[9.23671913,0.409179688,7.96384382]}

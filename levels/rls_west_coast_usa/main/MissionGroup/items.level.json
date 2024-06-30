@@ -285,3 +285,4 @@
 {"name":"rockcrawlm","class":"SimGroup","persistentId":"531db295-4c7f-457a-b614-55dbbf024767","__parent":"MissionGroup"}
 {"name":"hillclimb","class":"SimGroup","persistentId":"fd93abf8-9c44-445b-9561-d18a48f2ee91","__parent":"MissionGroup"}
 {"name":"muddrag","class":"SimGroup","persistentId":"2cce9271-c7e5-4c1c-bfba-d6540f6a901b","__parent":"MissionGroup"}
+{"name":"BeamNGTrigger_1","class":"BeamNGTrigger","persistentId":"9d2337e2-f880-4adb-8c4f-bf5166cf937e","__parent":"MissionGroup","position":[900.609924,-561.295105,163.54361],"luaFunction":"mainLevel.payMe","scale":[1,12.4514656,7.17841721]}

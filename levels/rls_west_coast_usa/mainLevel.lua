@@ -10,21 +10,52 @@ local starmudtrack = false
 local in_race_time = 0
 
 
+--x=ideal y=player =z reward
+local function mudreward(x, y, z)
+  local x = 7
+  local y = in_race_time
+  local z = 4500
+  local ratio = x / y
+  if ratio < 1 then
+    return math.floor(ratio * z * 100) / 100
+  else
+    return math.floor((math.pow(ratio, (1 + (z / 500)))) * z * 100) / 100
+  end
+end
+
+
+
+local function mudPayout(data)
+  if data.event == "enter" then
+    local label = "Mud Event reward"
+    print(mudreward)
+    local reward = mudreward()
+    career_modules_payment.pay({ money = { amount = (reward*-1)}}, {
+        label = label
+    })
+    --local money = career_modules_playerAttributes.getAttribute("money")
+    ui_message("Money: " .. reward, 10)
+  end
+end
+
 
 local function payMe(data)
   if data.event == "enter" then
     local label = "Because i figured out the trigger"
-    career_modules_payment.pay({ money = { amount = -10000}}, {
-        label = label
-    })
-    local money = career_modules_playerAttributes.getAttribute("money")
-    ui_message("Money: " .. money.value, 10)
+    mudPayout(data)
+    --career_modules_payment.pay({ money = { amount = -10000}}, {
+    --    label = label
+   -- })
+  --local money = career_modules_playerAttributes.getAttribute("money")
+   -- ui_message("Money: " .. money.value, 10)
   end
 end
 
 local function displayMessage(message, duration)
   ui_message(message, duration)
 end
+
+
 
 --green light trigger
 local function Greenlight(data)
@@ -35,7 +66,7 @@ local function Greenlight(data)
       --scenetree.findObject('startlight3'):setHidden(false)
       --scenetree.findObject('waitlight'):setHidden(false)
       starmudtrack = true
-      displayMessage("Off Road Track: Timer Started, GO! " ,10)
+      displayMessage("Mud Track: Timer Started, GO! " ,2)
   end
 end
 
@@ -87,7 +118,7 @@ end
 
 
 --reset stage
-local function resetstage (data)
+local function resetStage (data)
 if data.event == "enter" then
   --scenetree.findObject('startlight1'):setHidden(true)
   --scenetree.findObject('startlight2'):setHidden(true)
@@ -102,6 +133,7 @@ end
 
 --Finishline
 local function Finishline(data) 
+  local reward = mudreward()
   if data.event == "enter" then
       --scenetree.findObject('startlight1'):setHidden(true)
       --scenetree.findObject('startlight2'):setHidden(true)
@@ -110,9 +142,13 @@ local function Finishline(data)
      -- scenetree.findObject('readylight1'):setHidden(true)
       --scenetree.findObject('readylight2'):setHidden(true)
       --scenetree.findObject('readylight3'):setHidden(true)
-      displayMessage("Off Road Track: Time: " .. string.format("%.2f", in_race_time),10)
+      mudPayout(data)
+      displayMessage("Off Road Track: Time: " .. string.format("%.2f", in_race_time) .. " Money: " .. reward ,10)
+      
   end
 end
+
+
 
 local function onUpdate(dtReal, dtSim, dtRaw)
   -- Race time calculation
@@ -123,11 +159,10 @@ else
 end
 end
 
---x=playertime y=ideal =z reward
 
 M.displayMessage = displayMessage
 M.Finishline = Finishline
-M.resetstage = resetstage
+M.resetStage = resetStage
 M.Greenlight = Greenlight
 M.Yellowlight1 = Yellowlight1
 M.Yellowlight2 = Yellowlight2
@@ -135,5 +170,7 @@ M.Yellowlight3 = Yellowlight3
 M.onUpdate = onUpdate
 
 M.payMe = payMe
+M.mudPayout = mudPayout
+M.mudreward = mudreward
 
 return M

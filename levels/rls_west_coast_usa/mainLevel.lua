@@ -10,6 +10,7 @@ local starmudtrack = false
 local in_race_time = 0
 
 
+
 --x=ideal y=player =z reward
 local function mudreward(x, y, z)
   local x = 7
@@ -58,93 +59,48 @@ end
 
 
 --green light trigger
-local function Greenlight(data)
+local function GreenlightMudDrag(data)
   if data.event == "enter" then
-      --displayMessage("go!", 10)
-      --scenetree.findObject('startlight1'):setHidden(false)
-      --scenetree.findObject('startlight2'):setHidden(false)
-      --scenetree.findObject('startlight3'):setHidden(false)
-      --scenetree.findObject('waitlight'):setHidden(false)
+      displayMessage("go!", 10)
+      scenetree.findObject('mudDrag_Green'):setHidden(false)
+      scenetree.findObject('mudDrag_Yellow'):setHidden(true)
+      --scenetree.findObject('mudDragRed'):setHidden(false)
       starmudtrack = true
       displayMessage("Mud Track: Timer Started, GO! " ,2)
   end
 end
 
-
 --yellow light trigger
-local function Yellowlight1 (data)
+local function YellowlightMudDrag (data)
 if data.event == "enter" then--turns on yellow light
-  --scenetree.findObject('readylight1'):setHidden(false)
-  --scenetree.findObject('startlight'):setHidden(true)
-  --displayMessage(" Staged, go when ready. " ,10)
+  scenetree.findObject('mudDrag_Yellow'):setHidden(false)
+  displayMessage(" Staged, go when ready. " ,2)
  end
 -- if data.event == "enter" then--turns off green light
   
 -- end
 if data.event == "exit" then--turns off yellow light
-  --scenetree.findObject('readylight1'):setHidden(true)
+  scenetree.findObject('mudDrag_Yellow'):setHidden(true)
   end
-end
-
---yellow light trigger
-local function Yellowlight2 (data)
-  if data.event == "enter" then--turns on yellow light
-    --scenetree.findObject('readylight2'):setHidden(false)
-    --scenetree.findObject('startlight'):setHidden(true)
-    --displayMessage(" Staged, go when ready. " ,10)
-   end
- -- if data.event == "enter" then--turns off green light
-    
-  -- end
-  if data.event == "exit" then--turns off yellow light
-    --scenetree.findObject('readylight2'):setHidden(true)
-    end
-end
-
---yellow light trigger
-local function Yellowlight3 (data)
-  if data.event == "enter" then--turns on yellow light
-    --scenetree.findObject('readylight3'):setHidden(false)
-    --scenetree.findObject('startlight'):setHidden(true)
-    displayMessage(" Off Road Track: Staged, go when ready. " ,10)
-   end
- -- if data.event == "enter" then--turns off green light
-    
-  -- end
-  if data.event == "exit" then--turns off yellow light
-    --scenetree.findObject('readylight3'):setHidden(true)
-    end
 end
 
 
 --reset stage
-local function resetStage (data)
+local function resetStageMudDrag (data)
 if data.event == "enter" then
-  --scenetree.findObject('startlight1'):setHidden(true)
-  --scenetree.findObject('startlight2'):setHidden(true)
-  --scenetree.findObject('startlight3'):setHidden(true)
-  --scenetree.findObject('waitlight'):setHidden(true)
-  --scenetree.findObject('readylight1'):setHidden(true)
-  --scenetree.findObject('readylight2'):setHidden(true)
-  --scenetree.findObject('readylight3'):setHidden(true)
+  scenetree.findObject('mudDrag_Yellow'):setHidden(true)
+  scenetree.findObject('mudDrag_Green'):setHidden(true)
  starmudtrack = false
   end
 end
 
 --Finishline
-local function Finishline(data) 
+local function FinishlineMudDrag(data) 
   local reward = mudreward()
   if data.event == "enter" then
-      --scenetree.findObject('startlight1'):setHidden(true)
-      --scenetree.findObject('startlight2'):setHidden(true)
-     -- scenetree.findObject('startlight3'):setHidden(true)
-     -- scenetree.findObject('waitlight'):setHidden(true)
-     -- scenetree.findObject('readylight1'):setHidden(true)
-      --scenetree.findObject('readylight2'):setHidden(true)
-      --scenetree.findObject('readylight3'):setHidden(true)
+    scenetree.findObject('mudDrag_Green'):setHidden(true)
       mudPayout(data)
-      displayMessage("Off Road Track: Time: " .. string.format("%.2f", in_race_time) .. " Money: " .. reward ,10)
-      
+      displayMessage("Off Road Track: Time: " .. string.format("%.2f", in_race_time) .. " Money: " .. reward ,10)    
   end
 end
 
@@ -161,12 +117,11 @@ end
 
 
 M.displayMessage = displayMessage
-M.Finishline = Finishline
-M.resetStage = resetStage
-M.Greenlight = Greenlight
-M.Yellowlight1 = Yellowlight1
-M.Yellowlight2 = Yellowlight2
-M.Yellowlight3 = Yellowlight3
+M.FinishlineMudDrag = FinishlineMudDrag
+M.resetStageMudDrag = resetStageMudDrag
+M.GreenlightMudDrag = GreenlightMudDrag
+M.YellowlightMudDrag = YellowlightMudDrag
+
 M.onUpdate = onUpdate
 
 M.payMe = payMe

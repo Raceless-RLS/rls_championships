@@ -12,10 +12,23 @@ local timerActive = false
 local mActiveRace
 
 -- This is used to track if the race is staged
-local staged = false
+local staged = nil
 
 -- This is used to track the time in the race
 local in_race_time = 0
+
+local speedUnit = 2.2369362920544
+local speedThreshold = 5
+local checkInterval = 0.1  -- Interval in seconds to check the speed
+local cancelLoop = false
+
+-- Simple sleep function using os.clock
+local function sleep(seconds)
+    local start = os.clock()
+    while os.clock() - start < seconds do
+        -- Busy-wait loop
+    end
+end
 
 local function displayMessage(message, duration)
     ui_message(message, duration)
@@ -69,6 +82,26 @@ local races = {
         bestTime = 45,
         reward = 20000,
         label = "Right Rock Crawl"
+    },
+    hillclimbl = {
+        bestTime = 20,
+        reward = 10000,
+        label = "Left Hill Climb"
+    },
+    hillclimbm = {
+        bestTime = 15,
+        reward = 7500,
+        label = "Middle Hill Climb"
+    },
+    hillclimbr = {
+        bestTime = 10,
+        reward = 5000,
+        label = "Right Hill Climb"
+    },
+    bnyHill = {
+        bestTime = 60,
+        reward = 15000,
+        label = "Bunny Hill Climb"
     },
     testTrack = {
         bestTime = 5.5,
@@ -130,6 +163,7 @@ local function payoutRace(data)
     end
     local raceName = getActivityName(data)
     if data.event == "enter" and raceName == mActiveRace then
+        mActiveRace = nil
         local label = races[raceName].label .. " Event reward"
         local reward = raceReward(races[raceName].bestTime, races[raceName].reward)
         if reward <= 0 then
@@ -159,10 +193,16 @@ local function manageZone(data)
     --   data (table): The data containing the event information.
     local raceName = getActivityName(data)
     if data.event == "enter" then
-        mActiveRace = raceName
+        if staged == raceName then
+            mActiveRace = raceName
+            staged = nil
+        end
     else
-        mActiveRace = nil
-        timerActive = false
+        if mActiveRace == raceName then
+            mActiveRace = nil
+            timerActive = false
+            displayMessage("You exited the race zone, Race cancelled", 2)
+        end
     end
 end
 
@@ -175,15 +215,19 @@ local function Greenlight(data)
     -- Parameters:
     --   data (table): The data containing the event information.
     local raceName = getActivityName(data)
-    if data.event == "enter" and staged == true then
-        staged = false
+    local Greenlight = scenetree.findObject(raceName .. '_Green')
+    local Yellowlight = scenetree.findObject(raceName .. '_Yellow')
+    
+    if data.event == "enter" and staged == raceName then
         timerActive = true
+        in_race_time = 0
         displayMessage(races[raceName].label .. " Timer Started, GO! ", 2)
-
-        scenetree.findObject(raceName .. '_Green'):setHidden(false)
-        scenetree.findObject(raceName .. '_Yellow'):setHidden(true)
-        -- scenetree.findObject('mudDragRed'):setHidden(false)
-        
+        if Greenlight then  
+            Greenlight:setHidden(false)
+        end
+        if Yellowlight then
+            Yellowlight:setHidden(true)
+        end
     end
 end
 
@@ -195,15 +239,22 @@ local function Yellowlight(data)
     --
     -- Parameters:
     --   data (table): The data containing the event information.
+    printTable(data)
     local raceName = getActivityName(data)
-    if data.event == "enter" then -- turns on yellow light
-      staged = true
-      local race = races[raceName]
-      local message = string.format("Staged for %s.\nBest Time: %.2f seconds\nPotential Reward: $%.2f", race.label, race.bestTime, race.reward)
-      displayMessage(message, 10)
-        scenetree.findObject(raceName .. '_Yellow'):setHidden(false)
-    else -- turns off yellow light
-        scenetree.findObject(raceName .. '_Yellow'):setHidden(true)
+    local yellowLight = scenetree.findObject(raceName .. '_Yellow')
+
+    if data.event == "enter" then
+        staged = raceName
+        local race = races[raceName]
+        local message = string.format("Staged for %s.\nBest Time: %.2f seconds\nPotential Reward: $%.2f", race.label, race.bestTime, race.reward)
+        displayMessage(message, 10)
+        if yellowLight then
+            yellowLight:setHidden(false)
+        end
+    elseif data.event == "exit" then
+        if yellowLight then
+            yellowLight:setHidden(true)
+        end
     end
 end
 
@@ -215,13 +266,20 @@ local function Finishline(data)
     --
     -- Parameters:
     --   data (table): The data containing the event information.
+    print(mActiveRace)
     local raceName = getActivityName(data)
-    if data.event == "enter" then
+    local Greenlight = scenetree.findObject(raceName .. '_Green')
+    local Yellowlight = scenetree.findObject(raceName .. '_Yellow')
+    if data.event == "enter" and mActiveRace == raceName then
         timerActive = false
         local reward = payoutRace(data)
     else
-        scenetree.findObject(raceName .. '_Yellow'):setHidden(true)
-        scenetree.findObject(raceName .. '_Green'):setHidden(true)
+        if Yellowlight then
+            Yellowlight:setHidden(true)
+        end
+        if Greenlight then
+            Greenlight:setHidden(true)
+        end
     end
 end
 

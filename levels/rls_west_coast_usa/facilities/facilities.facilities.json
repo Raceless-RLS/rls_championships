@@ -18,6 +18,16 @@
       "parkingSpotNames":["commercialGarageParking1", "commercialGarageParking2", "commercialGarageParkingOutside1", "commercialGarageParkingOutside2", "commercialGarageParkingOutside3", "commercialGarageParkingOutside4"],
       "icon":"poi_garage_2_round",
       "tags":["truck"]
+    },
+	{
+      "id":"dragPaddockGarage",
+      "name":"Drag Paddock Garage",
+      "description":"Commercial vehicle garage, transport trucks, heavy machinery, buses, large vans, trailers, and more.",
+      "preview":"garage_servicestation.jpg",
+      "zoneNames":["dragPaddockGarage"],
+      "parkingSpotNames":["dragPaddockPark1", "dragPaddockPark2"],
+      "icon":"poi_garage_2_round",
+      "tags":["truck"]
     }
   ],
   "gasStations":[
@@ -490,6 +500,22 @@
       "description":"ui.career.computer.bigmapLabel.garage",
       "preview":"commercialGarageComputer2.jpg",
       "doors":[["commercialGarageComputer_area_2", "commercialGarageComputer_icon_2"]],
+      "screens":["commercialGarageComputer_screen_2"],
+      "functions": {"painting":true, "tuning":true, "vehicleInventory":true, "vehicleShop":true, "partShop":true, "partInventory":true, "insurancePolicies":true},
+      "activityAcceptProps":[
+        {"keyLabel":"Vehicle & Parts Management"},
+        {"keyLabel":"Vehicle & Parts Shopping"},
+      ],
+      "iconOffsetHeight":0.24,
+      "iconLift":0.24,
+      "icon":"poi_laptop_round"
+    },
+    {
+      "id":"dragPaddockGarageComputer_area3",
+      "name":"Commercial Garage - Small Vehicles",
+      "description":"ui.career.computer.bigmapLabel.garage",
+      "preview":"commercialGarageComputer2.jpg",
+      "doors":[["dragPaddockGarageComputer_area", "dragPaddockGarageComputer_icon"]],
       "screens":["commercialGarageComputer_screen_2"],
       "functions": {"painting":true, "tuning":true, "vehicleInventory":true, "vehicleShop":true, "partShop":true, "partInventory":true, "insurancePolicies":true},
       "activityAcceptProps":[

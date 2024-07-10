@@ -84,24 +84,29 @@ local races = {
         label = "Right Rock Crawl"
     },
     hillclimbl = {
-        bestTime = 20,
+        bestTime = 8,
         reward = 10000,
         label = "Left Hill Climb"
     },
     hillclimbm = {
-        bestTime = 15,
+        bestTime = 8,
         reward = 7500,
         label = "Middle Hill Climb"
     },
     hillclimbr = {
-        bestTime = 10,
+        bestTime = 8,
         reward = 5000,
         label = "Right Hill Climb"
     },
     bnyHill = {
-        bestTime = 60,
-        reward = 15000,
+        bestTime = 15,
+        reward = 5000,
         label = "Bunny Hill Climb"
+            },
+    dragTrack = {
+        bestTime = 9.0,
+        reward = 3000,
+        label = "Drag Track"
     },
     testTrack = {
         bestTime = 5.5,

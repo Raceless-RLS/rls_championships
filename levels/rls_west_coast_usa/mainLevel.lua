@@ -24,7 +24,8 @@ local mHotlap = nil
 local mAltRoute = nil
 local leaderboardFile = 'career/leaderboard.json'
 local leaderboard = {}
-local splitTimes = {}
+local mSplitTimes = {}
+local mBestSplitTime = {}
 
 -- Function to check if career mode is active
 local function isCareerModeActive()
@@ -135,6 +136,7 @@ local races = {
     drag = {
         bestTime = 11,
         reward = 1500,
+        checkpoints = 2,
         label = "Drag Strip",
         displaySpeed = true
     },
@@ -351,18 +353,18 @@ local function payoutRace(data)
 
                 if mHotlap == raceName then
                     leaderboard[raceName].altRoute.hotlapTime = in_race_time
-                    leaderboard[raceName].altRoute.hotlapTimesplitTimes = splitTimes
+                    leaderboard[raceName].altRoute.hotlapSplitTimes = mSplitTimes
                 else
                     leaderboard[raceName].altRoute.bestTime = in_race_time
-                    leaderboard[raceName].altRoute.splitTimes = splitTimes
+                    leaderboard[raceName].altRoute.splitTimes = mSplitTimes
                 end
             else
                 if mHotlap == raceName then
                     leaderboard[raceName].hotlapTime = in_race_time
-                    leaderboard[raceName].hotlapTimesplitTimes = splitTimes
+                    leaderboard[raceName].hotlapSplitTimes = mSplitTimes
                 else
                     leaderboard[raceName].bestTime = in_race_time   
-                    leaderboard[raceName].splitTimes = splitTimes
+                    leaderboard[raceName].splitTimes = mSplitTimes
                 end
             end
         else 
@@ -408,31 +410,38 @@ local function payoutRace(data)
     end
 end
 
-local function getOldSplitTime(raceName, currentCheckpointIndex, isHotlap, isAltRoute, in_race_time)
+local function getDifference(raceName, currentCheckpointIndex)
     if not leaderboard[raceName] then
-        return in_race_time
+        print("No leaderboard for " .. raceName)
+        printTable(leaderboard)
+        return 0
     end
+    printTable(leaderboard[raceName])
 
-    local splitTimes
-    if isAltRoute then
-        if isHotlap then
-            splitTimes = leaderboard[raceName].altRoute and leaderboard[raceName].altRoute.hotlapSplitTimes
+    local splitTimes = {}
+    if mAltRoute then
+        if mHotlap == raceName then
+            print("Alt Route Hotlap")
+            splitTimes = leaderboard[raceName].altRoute and leaderboard[raceName]["altRoute"].hotlapSplitTimes
         else
-            splitTimes = leaderboard[raceName].altRoute and leaderboard[raceName].altRoute.splitTimes
+            print("Alt Route Not Hotlap")
+            splitTimes = leaderboard[raceName].altRoute and leaderboard[raceName]["altRoute"].splitTimes
         end
     else
-        if isHotlap then
+        if mHotlap == raceName then
+            print("Hotlap")
             splitTimes = leaderboard[raceName].hotlapSplitTimes
         else
+            print("Not Hotlap")
             splitTimes = leaderboard[raceName].splitTimes
         end
     end
 
     if not splitTimes or not splitTimes[currentCheckpointIndex + 1] then
-        return in_race_time
+        return 0
     end
-
-    return splitTimes[currentCheckpointIndex + 1]
+    print("Old Split times: " .. splitTimes[currentCheckpointIndex + 1])
+    return mSplitTimes[currentCheckpointIndex + 1] - splitTimes[currentCheckpointIndex + 1]
 end
 
 local function checkpoint(data)
@@ -444,7 +453,6 @@ local function checkpoint(data)
     local activityType = getActivityType(data)
     local check = tonumber(activityType:match("%d+")) or 0
     local alt = activityType:match("alt") and true or false
-    print(check, alt)
     
     if mActiveRace == raceName then
         if currCheckpoint == nil then
@@ -456,7 +464,7 @@ local function checkpoint(data)
                     mAltRoute = false
                 end
             else 
-                local message = string.format("Checkpoint %d/%d reached\nTime: %s\nYou must complete this race in the designated order.",
+                local message = string.format("Checkpoint %d/%d reached\nTime: %s\n**You must complete this race in the designated order.**",
                     check, races[raceName].checkpoints, formatTime(in_race_time))
                 displayMessage(message, 10)
             end
@@ -488,10 +496,12 @@ local function checkpoint(data)
         
         if check == nextCheckpoint then
             currCheckpoint = check
-            splitTimes[currentCheckpointIndex + 1] = in_race_time
-            local oldsplit = getOldSplitTime(raceName, currentCheckpointIndex, mHotlap == raceName, mAltRoute)
+            mSplitTimes[currentCheckpointIndex + 1] = in_race_time
             local message = string.format("Checkpoint %d/%d reached\nTime: %s\n%s",
-            currentCheckpointIndex + 1, totalCheckpoints, formatTime(in_race_time), formatTime((oldsplit and in_race_time - oldsplit) or 0))
+            currentCheckpointIndex + 1, totalCheckpoints, formatTime(in_race_time), formatTime(getDifference(raceName, currentCheckpointIndex)))
+            if races[raceName].displaySpeed then
+                message = message .. string.format("\nSpeed: %.2f Mph", math.abs(be:getObjectVelocityXYZ(data.subjectID) * speedUnit))
+            end
             displayMessage(message, 7)
         else
             local missedCheckpoints
@@ -538,7 +548,7 @@ local function exitCheckpoint(data)
         mAltRoute = nil
         mHotlap = nil
         currCheckpoint = nil
-        splitTimes = {}
+        mSplitTimes = {}
         displayMessage("You exited the race zone, Race cancelled", 3)
     end
 end
@@ -573,6 +583,63 @@ local function manageZone(data)
     end
 end
 
+local motivationalMessages = {
+    -- Enthusiastic
+    "Give it your all!",
+    "Time to shine!",
+    "Let's set a new record!",
+    "It's go time!",
+    
+    -- Funny
+    "Try not to hit any trees this time!",
+    "Remember, the brake is the other pedal!",
+    "First one to the finish line gets a cookie!",
+    "Drive like you stole it... wait, you didn't, right?",
+    
+    -- Passive-aggressive
+    "Try to keep it on the track this time, okay?",
+    "Let's see if you've improved since last time...",
+    "Maybe today you'll actually finish the race?",
+    "I'm sure you'll do better than your last attempt. It can't get worse, right?",
+    
+    -- Encouraging
+    "Believe in yourself, you've got this!",
+    "Today could be your personal best!",
+    "Focus and breathe, you're ready for this!",
+    "Every second counts, make them all yours!",
+    
+    -- Challenging
+    "Think you can handle this? Prove it!",
+    "Show us what you're really made of!",
+    "This track has beaten you before. Not today!",
+    "Time to separate the rookies from the pros!",
+    
+    -- Quirky
+    "May the downforce be with you!",
+    "Remember: turn left to go left, right to go right!",
+    "Gravity is just a suggestion, right?",
+    "If in doubt, flat out! (Results may vary)",
+    
+    -- Intense
+    "Push it to the limit!",
+    "Leave nothing on the table!",
+    "Drive like your life depends on it!",
+    "It's now or never!"
+}
+
+local function getStartMessage(raceName)
+    local activity = races[raceName]
+    local message
+    
+    if math.random() < 0.75 then
+        message = "GO!"
+    else
+        message = motivationalMessages[math.random(#motivationalMessages)]
+    end
+    
+    return string.format("**%s Event Started!\n%s**", activity.label, message)
+end
+
 -- green light trigger
 local function Greenlight(data)
     -- This function handles the green light trigger using a BeamNgTrigger.
@@ -592,7 +659,7 @@ local function Greenlight(data)
             timerActive = false
             local reward = payoutRace(data)
             currCheckpoint = nil
-            splitTimes = {}
+            mSplitTimes = {}
             mActiveRace = raceName
             in_race_time = 0
             timerActive = true
@@ -607,7 +674,7 @@ local function Greenlight(data)
         timerActive = true
         in_race_time = 0
         mActiveRace = raceName
-        displayMessage(races[raceName].label .. " Timer Started, GO! ", 2)
+        displayMessage(getStartMessage(raceName), 2)
         if Greenlight then
             Greenlight:setHidden(false)
         end
@@ -715,8 +782,20 @@ local function Finishline(data)
     local Greenlight = scenetree.findObject(raceName .. '_Green')
     local Yellowlight = scenetree.findObject(raceName .. '_Yellow')
     if data.event == "enter" and mActiveRace == raceName then
-        timerActive = false
-        local reward = payoutRace(data)
+        if currCheckpoint then
+            if currCheckpoint + 1 == races[raceName].checkpoints then
+                timerActive = false
+                local reward = payoutRace(data)
+                currCheckpoint = nil
+                mSplitTimes = {}
+                mActiveRace = nil
+                in_race_time = 0
+                return
+            end
+        else
+            timerActive = false
+            local reward = payoutRace(data)
+        end
     else
         if Yellowlight then
             Yellowlight:setHidden(true)

@@ -33,12 +33,6 @@ end
 
 -- Function to read the leaderboard from the file
 local function loadLeaderboard()
-    if not isCareerModeActive() then
-        if ~leaderboard then
-            leaderboard = {}
-        end
-        return
-    end
     local saveSlot, savePath = career_saveSystem.getCurrentSaveSlot()
     local file = savePath .. '/' .. leaderboardFile
     local file = io.open(file, "r")
@@ -53,12 +47,6 @@ end
 
 -- Function to save the leaderboard to the file in all autosave folders
 local function saveLeaderboard()
-    if not isCareerModeActive() then
-        if ~leaderboard then
-            leaderboard = {}
-        end
-        return
-    end
     local saveSlot, savePath = career_saveSystem.getCurrentSaveSlot()
     print("saveSlot: " .. saveSlot)
     print("savePath: " .. savePath)
@@ -308,69 +296,6 @@ local function getOldTime(raceName, isHotlap, isAltRoute)
     end
 end
 
-local function saveBestTime(raceName)
-    loadLeaderboard()
-    local newBestTime = isNewBestTime(raceName, in_race_time, mHotlap == raceName, mAltRoute)
-    if newBestTime then
-        if not leaderboard[raceName] then
-            leaderboard[raceName] = {}
-        end
-        if mAltRoute then
-            if not leaderboard[raceName].altRoute then
-                leaderboard[raceName].altRoute = {}
-            end
-
-            if mHotlap == raceName then
-                leaderboard[raceName].altRoute.hotlapTime = in_race_time
-                leaderboard[raceName].altRoute.hotlapTimesplitTimes = splitTimes
-            else
-                leaderboard[raceName].altRoute.bestTime = in_race_time
-                leaderboard[raceName].altRoute.splitTimes = splitTimes
-            end
-        else
-            if mHotlap == raceName then
-                leaderboard[raceName].hotlapTime = in_race_time
-                leaderboard[raceName].hotlapTimesplitTimes = splitTimes
-            else
-                leaderboard[raceName].bestTime = in_race_time   
-                leaderboard[raceName].splitTimes = splitTimes
-            end
-        end
-    else 
-        print("No new best time for" .. raceName)
-        reward = reward / 2
-    end
-end
-
-local function displayEndMessage(data, reward)
-    local raceName = getActivityName(data)
-    local newBestTime = isNewBestTime(raceName, in_race_time, mHotlap == raceName, mAltRoute)
-    local oldTime = getOldTime(raceName, mHotlap == raceName, mAltRoute) or in_race_time
-    local newBestTimeMessage = newBestTime and "Congratulations! New Best Time!\n" or ""
-        local raceLabel = races[raceName].label
-        if mAltRoute then
-            raceLabel = raceLabel .. " (Alternative Route)"
-        end
-        if mHotlap == raceName then
-            raceLabel = raceLabel .. " (Hotlap)"
-        end
-        local timeMessage = string.format("New Time: %s\nOld Time: %s", formatTime(in_race_time), formatTime(oldTime))
-        local rewardMessage = string.format("Reward: $%.2f", reward)
-        if races[raceName].hotlap then
-            local hotlapMessage = string.format("Hotlap Started\n", races[raceName].hotlap)
-            if mAltRoute then
-                hotlapMessage = hotlapMessage .. string.format("Target: %s", formatTime(races[raceName].altRoute.hotlap))
-            end
-        end
-        
-        local message = newBestTimeMessage .. raceLabel .. "\n" .. timeMessage .. "\n" .. rewardMessage
-        if races[raceName].displaySpeed then
-            local speedMessage = string.format("Speed: %.2f Mph", math.abs(be:getObjectVelocityXYZ(data.subjectID) * speedUnit))
-            message = message .. "\n" .. speedMessage
-    end
-    displayMessage(message, 10)
-end
-
 local function payoutRace(data)
     -- This function handles the payout for a race.
     -- It calculates the reward based on the race's best time and the actual time taken.
@@ -389,9 +314,9 @@ local function payoutRace(data)
     end
     local raceName = getActivityName(data)
     if not isCareerModeActive() then
-        saveBestTime(raceName)
-        displayEndMessage(data, 0)
-        return
+        local message = string.format("%s\nTime: %s", races[raceName].label, formatTime(in_race_time))
+        displayMessage(message, 10)
+        return 0
     end
     if data.event == "enter" and raceName == mActiveRace then
         mActiveRace = nil
@@ -413,7 +338,37 @@ local function payoutRace(data)
             return 0
         end
         -- Save the best time to the leaderboard
-        saveBestTime(raceName, mHotlap, mAltRoute)
+        loadLeaderboard()
+        local newBestTime = isNewBestTime(raceName, in_race_time, mHotlap == raceName, mAltRoute)
+        if newBestTime then
+            if not leaderboard[raceName] then
+                leaderboard[raceName] = {}
+            end
+            if mAltRoute then
+                if not leaderboard[raceName].altRoute then
+                    leaderboard[raceName].altRoute = {}
+                end
+
+                if mHotlap == raceName then
+                    leaderboard[raceName].altRoute.hotlapTime = in_race_time
+                    leaderboard[raceName].altRoute.hotlapTimesplitTimes = splitTimes
+                else
+                    leaderboard[raceName].altRoute.bestTime = in_race_time
+                    leaderboard[raceName].altRoute.splitTimes = splitTimes
+                end
+            else
+                if mHotlap == raceName then
+                    leaderboard[raceName].hotlapTime = in_race_time
+                    leaderboard[raceName].hotlapTimesplitTimes = splitTimes
+                else
+                    leaderboard[raceName].bestTime = in_race_time   
+                    leaderboard[raceName].splitTimes = splitTimes
+                end
+            end
+        else 
+            print("No new best time for" .. raceName)
+            reward = reward / 2
+        end
         career_modules_payment.pay({
             money = {
                 amount = -reward
@@ -421,7 +376,30 @@ local function payoutRace(data)
         }, {
             label = label
         })
-        displayEndMessage(data, reward)
+        local oldTime = getOldTime(raceName, mHotlap == raceName, mAltRoute) or in_race_time
+        local newBestTimeMessage = newBestTime and "Congratulations! New Best Time!\n" or ""
+        local raceLabel = races[raceName].label
+        if mAltRoute then
+            raceLabel = raceLabel .. " (Alternative Route)"
+        end
+        if mHotlap == raceName then
+            raceLabel = raceLabel .. " (Hotlap)"
+        end
+        local timeMessage = string.format("New Time: %s\nOld Time: %s", formatTime(in_race_time), formatTime(oldTime))
+        local rewardMessage = string.format("Reward: $%.2f", reward)
+        if races[raceName].hotlap then
+            local hotlapMessage = string.format("Hotlap Started\n", races[raceName].hotlap)
+            if mAltRoute then
+                hotlapMessage = hotlapMessage .. string.format("Target: %s", formatTime(races[raceName].altRoute.hotlap))
+            end
+        end
+        
+        local message = newBestTimeMessage .. raceLabel .. "\n" .. timeMessage .. "\n" .. rewardMessage
+        if races[raceName].displaySpeed then
+            local speedMessage = string.format("Speed: %.2f Mph", math.abs(be:getObjectVelocityXYZ(data.subjectID) * speedUnit))
+            message = message .. "\n" .. speedMessage
+        end
+        displayMessage(message, 10)
         print("leaderboard:")
         printTable(leaderboard)
         saveLeaderboard()

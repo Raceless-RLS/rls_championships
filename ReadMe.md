@@ -1,7 +1,19 @@
-# rls_championships
+# RLS West Coast Championships
 
-This is a version of the West Coast US Map with a bunch of extra races and offroading sections of the map.
+## Overview
+This mod enhances the West Coast USA Map with additional races, off-roading sections, and exciting new features for BeamNG.drive.
 
-## TODO
-- add lua to have certain mission require vehicle part
-- add lua so certain missions will reward player with a vehicle
+## Features
+- **Expanded Racing Experience**: Most races from the original map have been converted into freeroam races.
+- **Career Mode Integration**: Freeroam racing is now available in career mode, with full freeroam support coming soon.
+- **New Freeroam Challenges**:
+  - 3 Rock Climbs
+  - 3 Hill Climbs
+  - Bunny Slope Rock Climb
+  - Small Rock Climb
+  - Mud Drag Racing
+  - Track w/ Alternative Route
+  - Dirt Circuit
+  - Drag Strip
+- **Enhanced Map**: Additional backroads for more diverse driving experiences.
+- **Police Vehicles**: Encounter the Bastion, SUV, and Van as police vehicles on this map.

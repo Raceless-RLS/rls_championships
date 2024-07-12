@@ -5,6 +5,13 @@ local M = {}
 
 M.dependencies = {'career_career', 'career_modules_insurance', 'career_saveSystem'}
 
+local checkpointSoundPath = 'art/sound/ui_checkpoint.ogg'
+
+-- Function to play the checkpoint sound
+local function playCheckpointSound()
+    Engine.Audio.playOnce('AudioGui', checkpointSoundPath, {volume = 4.5})
+end
+
 -- This is used to track if the timer is active
 local timerActive = false
 
@@ -412,27 +419,20 @@ end
 
 local function getDifference(raceName, currentCheckpointIndex)
     if not leaderboard[raceName] then
-        print("No leaderboard for " .. raceName)
-        printTable(leaderboard)
         return 0
     end
-    printTable(leaderboard[raceName])
 
     local splitTimes = {}
     if mAltRoute then
         if mHotlap == raceName then
-            print("Alt Route Hotlap")
             splitTimes = leaderboard[raceName].altRoute and leaderboard[raceName]["altRoute"].hotlapSplitTimes
         else
-            print("Alt Route Not Hotlap")
             splitTimes = leaderboard[raceName].altRoute and leaderboard[raceName]["altRoute"].splitTimes
         end
     else
         if mHotlap == raceName then
-            print("Hotlap")
             splitTimes = leaderboard[raceName].hotlapSplitTimes
         else
-            print("Not Hotlap")
             splitTimes = leaderboard[raceName].splitTimes
         end
     end
@@ -440,22 +440,27 @@ local function getDifference(raceName, currentCheckpointIndex)
     if not splitTimes or not splitTimes[currentCheckpointIndex + 1] then
         return 0
     end
-    print("Old Split times: " .. splitTimes[currentCheckpointIndex + 1])
     return mSplitTimes[currentCheckpointIndex + 1] - splitTimes[currentCheckpointIndex + 1]
 end
 
 local function checkpoint(data)
     if data.event == "exit" then
+        print("Checkpoint function exited due to 'exit' event")
         return
     end
-    printTable(data)
+    print("Checkpoint function called with data:")
+    
     local raceName = getActivityName(data)
     local activityType = getActivityType(data)
     local check = tonumber(activityType:match("%d+")) or 0
     local alt = activityType:match("alt") and true or false
     
+    print(string.format("raceName: %s, activityType: %s, check: %d, alt: %s", raceName, activityType, check, tostring(alt)))
+    print(string.format("mActiveRace: %s, currCheckpoint: %s, mAltRoute: %s", tostring(mActiveRace), tostring(currCheckpoint), tostring(mAltRoute)))
+    
     if mActiveRace == raceName then
         if currCheckpoint == nil then
+            print("currCheckpoint is nil, initializing...")
             if check == 0 then
                 currCheckpoint = -1
                 if alt then
@@ -468,7 +473,7 @@ local function checkpoint(data)
                     check, races[raceName].checkpoints, formatTime(in_race_time))
                 displayMessage(message, 10)
             end
-            print(currCheckpoint)
+            print(string.format("currCheckpoint set to: %s, mAltRoute: %s", tostring(currCheckpoint), tostring(mAltRoute)))
         end
         
         local nextCheckpoint
@@ -476,27 +481,34 @@ local function checkpoint(data)
         local currentCheckpointIndex
 
         if mAltRoute then
+            print("Processing alt route...")
             local altCheckpoints = races[raceName].altRoute.altCheckpoints
             totalCheckpoints = #altCheckpoints
-            -- Find the current index in the altCheckpoints array
+            print(string.format("Alt route checkpoints: %s", table.concat(altCheckpoints, ", ")))
             for i, cp in ipairs(altCheckpoints) do
                 if cp == currCheckpoint then
                     currentCheckpointIndex = i
                     break
                 end
             end
-            -- If currentCheckpointIndex is nil, set it to 0 (start of the altCheckpoints array)
             currentCheckpointIndex = currentCheckpointIndex or 0
             nextCheckpoint = altCheckpoints[currentCheckpointIndex + 1]
         else
+            print("Processing standard route...")
             totalCheckpoints = races[raceName].checkpoints
             currentCheckpointIndex = currCheckpoint + 1
             nextCheckpoint = currentCheckpointIndex
         end
         
+        print(string.format("currentCheckpointIndex: %d, nextCheckpoint: %s, totalCheckpoints: %d", 
+                            currentCheckpointIndex, tostring(nextCheckpoint), totalCheckpoints))
+        
         if check == nextCheckpoint then
+            print(string.format("Checkpoint %d reached correctly", check))
             currCheckpoint = check
             mSplitTimes[currentCheckpointIndex + 1] = in_race_time
+            -- Play the checkpoint sound
+            playCheckpointSound()
             local message = string.format("Checkpoint %d/%d reached\nTime: %s\n%s",
             currentCheckpointIndex + 1, totalCheckpoints, formatTime(in_race_time), formatTime(getDifference(raceName, currentCheckpointIndex)))
             if races[raceName].displaySpeed then
@@ -504,37 +516,42 @@ local function checkpoint(data)
             end
             displayMessage(message, 7)
         else
+            print(string.format("Checkpoint mismatch. Expected: %s, Got: %d", tostring(nextCheckpoint), check))
             local missedCheckpoints
             if mAltRoute then
                 local altCheckpoints = races[raceName].altRoute.altCheckpoints
                 local expectedIndex = nil
+                local actualIndex = nil
                 for i, cp in ipairs(altCheckpoints) do
                     if cp == nextCheckpoint then
                         expectedIndex = i
-                        break
                     end
-                end
-                local actualIndex = nil
-                for i, cp in ipairs(altCheckpoints) do
                     if cp == check then
                         actualIndex = i
+                    end
+                    if expectedIndex and actualIndex then
                         break
                     end
                 end
+                print(string.format("Alt route: expectedIndex: %s, actualIndex: %s", tostring(expectedIndex), tostring(actualIndex)))
                 missedCheckpoints = actualIndex and expectedIndex and (actualIndex - expectedIndex) or 0
             else
                 missedCheckpoints = check - nextCheckpoint
             end
+            
+            print(string.format("Missed checkpoints: %d", missedCheckpoints))
             
             if missedCheckpoints > 0 then
                 local message = string.format(
                     "You missed %d checkpoint(s). Turn around and go back to checkpoint %d.", missedCheckpoints,
                     nextCheckpoint)
                 displayMessage(message, 10)
+            elseif missedCheckpoints < 0 then
+                print("Warning: Negative missed checkpoints. This shouldn't happen.")
             end
         end
     else
-        return
+        print(string.format("Checkpoint ignored. mActiveRace (%s) != raceName (%s)", tostring(mActiveRace), raceName))
     end
 end
 
@@ -542,7 +559,7 @@ local function exitCheckpoint(data)
     if be:getPlayerVehicleID(0) ~= data.subjectID then
         return
     end
-    if data.event == "exit" and mActiveRace then
+    if data.event == "enter" and mActiveRace then
         mActiveRace = nil
         timerActive = false
         mAltRoute = nil
@@ -578,6 +595,10 @@ local function manageZone(data)
         if mActiveRace == raceName then
             mActiveRace = nil
             timerActive = false
+            mAltRoute = nil
+            mHotlap = nil
+            currCheckpoint = nil
+            mSplitTimes = {}
             displayMessage("You exited the race zone, Race cancelled", 2)
         end
     end
@@ -631,7 +652,7 @@ local function getStartMessage(raceName)
     local activity = races[raceName]
     local message
     
-    if math.random() < 0.75 then
+    if math.random() < 0.5 then
         message = "GO!"
     else
         message = motivationalMessages[math.random(#motivationalMessages)]
@@ -640,24 +661,29 @@ local function getStartMessage(raceName)
     return string.format("**%s Event Started!\n%s**", activity.label, message)
 end
 
--- green light trigger
+-- Green light trigger
 local function Greenlight(data)
-    -- This function handles the green light trigger using a BeamNgTrigger.
-    -- The trigger should start at the line after the staging section.
-    -- The trigger must be named in the format of "raceName_identifier".
-    --
-    -- Parameters:
-    --   data (table): The data containing the event information.
+    print("Greenlight function called with data:")
+
     if be:getPlayerVehicleID(0) ~= data.subjectID then
+        print("Greenlight: Player vehicle ID mismatch")
         return
     end
+
     local raceName = getActivityName(data)
+    print("Greenlight: raceName =" .. raceName)
+
     local Greenlight = scenetree.findObject(raceName .. '_Green')
     local Yellowlight = scenetree.findObject(raceName .. '_Yellow')
+
     if currCheckpoint then
+        print("Greenlight: currCheckpoint =" .. currCheckpoint)
         if currCheckpoint + 1 == races[raceName].checkpoints then
+            playCheckpointSound()
+            print("Greenlight: Final checkpoint reached")
             timerActive = false
             local reward = payoutRace(data)
+            print("Greenlight: Race payout =" .. reward)
             currCheckpoint = nil
             mSplitTimes = {}
             mActiveRace = raceName
@@ -665,21 +691,40 @@ local function Greenlight(data)
             timerActive = true
             if races[raceName].hotlap then
                 mHotlap = raceName
+                print("Greenlight: Hotlap started for" .. raceName)
             end
             return
         end
     end
 
     if data.event == "enter" and staged == raceName then
+        print("Greenlight: Enter event triggered and race is staged")
         timerActive = true
         in_race_time = 0
         mActiveRace = raceName
+        print("Greenlight: Race started for" .. raceName)
+        print("Greenlight: in_race_time =" .. in_race_time)
+        print("Greenlight: mActiveRace =" .. mActiveRace)
         displayMessage(getStartMessage(raceName), 2)
         if Greenlight then
             Greenlight:setHidden(false)
+            print("Greenlight: Green light shown")
+        else
+            print("Greenlight: Green light object not found")
         end
         if Yellowlight then
             Yellowlight:setHidden(true)
+            print("Greenlight: Yellow light hidden")
+        else
+            print("Greenlight: Yellow light object not found")
+        end
+    else
+        print("Greenlight: Conditions not met for race start")
+        print("Greenlight: data.event =" .. data.event)
+        if staged == nil then
+            print("Greenlight: staged = False")
+        else
+            print("Greenlight: staged = " .. staged)
         end
     end
 end
@@ -723,46 +768,60 @@ local function displayStagedMessage(race, times)
     message = message .. "\n\n**Note: All rewards are cut by 50% if they are below your best time.**"
     displayMessage(message, 10)
 end
-
--- yellow light trigger
+-- Yellow light trigger
 local function Yellowlight(data)
-    -- This function handles the yellow light trigger using a BeamNgTrigger.
-    -- The trigger should be before the starting line where people sit and wait for staging.
-    -- The trigger must be named in the format of "raceName_identifier".
-    --
-    -- Parameters:
-    --   data (table): The data containing the event information.
-    printTable(data)
+    print("Yellowlight function called with data:")
+
     if be:getPlayerVehicleID(0) ~= data.subjectID then
+        print("Yellowlight: Player vehicle ID mismatch")
         return
     end
+
     local raceName = getActivityName(data)
+    print("Yellowlight: raceName =" .. raceName)
+
     local yellowLight = scenetree.findObject(raceName .. '_Yellow')
-    
+
     if data.event == "enter" then
-        if math.abs(be:getObjectVelocityXYZ(data.subjectID)) * speedUnit > 5 then
+        print("Yellowlight: Enter event triggered")
+        local vehicleSpeed = math.abs(be:getObjectVelocityXYZ(data.subjectID)) * speedUnit
+        print("Yellowlight: Vehicle speed =" .. vehicleSpeed)
+
+        if vehicleSpeed > 5 then
+            print("Yellowlight: Vehicle too fast to stage")
             local message = "You are too fast to stage.\n" .. "Please back up and slow down to stage."
             displayMessage(message, 2)
             staged = nil
-            return
-        end
-        loadLeaderboard()
-        print("After load Leaderboard:")
-        printTable(leaderboard)
-        staged = raceName
-        local race = races[raceName]
-        if not leaderboard[raceName] then
-            leaderboard[raceName] = {}
-        end
-        displayStagedMessage(race, leaderboard[raceName])
-        
-        if yellowLight then
-            yellowLight:setHidden(false)
+        else
+            print("Yellowlight: Vehicle speed acceptable for staging")
+            loadLeaderboard()
+            print("Yellowlight: Leaderboard loaded")
+            staged = raceName
+            print("Yellowlight: staged set to" .. raceName)
+
+            local race = races[raceName]
+            if not leaderboard[raceName] then
+                leaderboard[raceName] = {}
+                print("Yellowlight: Created new leaderboard entry for" .. raceName)
+            end
+            displayStagedMessage(race, leaderboard[raceName])
+            
+            if yellowLight then
+                yellowLight:setHidden(false)
+                print("Yellowlight: Yellow light shown")
+            else
+                print("Yellowlight: Yellow light object not found")
+            end
         end
     elseif data.event == "exit" then
+        print("Yellowlight: Exit event triggered")
         staged = nil
+        print("Yellowlight: staged set to nil")
         if yellowLight then
             yellowLight:setHidden(true)
+            print("Yellowlight: Yellow light hidden")
+        else
+            print("Yellowlight: Yellow light object not found")
         end
     end
 end
@@ -782,6 +841,7 @@ local function Finishline(data)
     local Greenlight = scenetree.findObject(raceName .. '_Green')
     local Yellowlight = scenetree.findObject(raceName .. '_Yellow')
     if data.event == "enter" and mActiveRace == raceName then
+        playCheckpointSound()
         if currCheckpoint then
             if currCheckpoint + 1 == races[raceName].checkpoints then
                 timerActive = false

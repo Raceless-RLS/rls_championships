@@ -38,6 +38,90 @@ local leftTimeDigits = {}
 local rightTimeDigits = {}
 local leftSpeedDigits = {}
 local rightSpeedDigits = {}
+local maxAssets = 6
+local maxActiveAssets = 2
+local ActiveAssets = {}
+ActiveAssets.__index = ActiveAssets
+
+local maxActiveAssets = 2
+
+function ActiveAssets.new()
+    local self = setmetatable({}, ActiveAssets)
+    self.assets = {}
+    return self
+end
+
+function ActiveAssets:addAssetList(triggerName, newAssets)
+    -- Create a new asset list for this trigger
+    local assetList = {
+        triggerName = triggerName,
+        assets = newAssets
+    }
+
+    -- Add the new asset list
+    table.insert(self.assets, assetList)
+
+    -- If we exceed maxActiveAssets, remove and hide the oldest asset list
+    if #self.assets > maxActiveAssets then
+        local oldestAssetList = table.remove(self.assets, 1)
+        self:hideAssetList(oldestAssetList)
+    end
+end
+
+function ActiveAssets:hideAssetList(assetList)
+    for _, asset in ipairs(assetList.assets) do
+        asset:setHidden(true)
+    end
+end
+
+function ActiveAssets:hideAllAssets()
+    for _, assetList in ipairs(self.assets) do
+        self:hideAssetList(assetList)
+    end
+    self.assets = {}
+end
+
+function ActiveAssets:getOldestAssetList()
+    return self.assets[1]
+end
+
+-- Create an instance of ActiveAssets
+local activeAssets = ActiveAssets.new()
+
+-- Function to display assets
+local function displayAssets(data)
+    local triggerName = data.triggerName
+    local newAssets = {}
+
+    -- Unhide assets and add them to newAssets table
+    for i = 0, maxAssets - 1 do
+        local assetName = triggerName .. "_asset" .. i
+        local asset = scenetree.findObject(assetName)
+        if asset then
+            asset:setHidden(false)
+            table.insert(newAssets, asset)
+        else
+            break  -- Stop if an asset is not found
+        end
+    end
+
+    -- If no assets were found, return early
+    if #newAssets == 0 then
+        return
+    end
+
+    -- Add the new asset list to activeAssets
+    activeAssets:addAssetList(triggerName, newAssets)
+
+    -- If we have reached the maximum number of active asset lists,
+    -- we might want to do something with the oldest one
+    if #activeAssets.assets == maxActiveAssets then
+        local oldestAssetList = activeAssets:getOldestAssetList()
+        -- Here you can add code to clear or update the display of the oldest asset list
+        -- For example:
+        -- clearAssetListDisplay(oldestAssetList)
+    end
+end
 
 -- Function to check if career mode is active
 local function isCareerModeActive()
@@ -599,22 +683,24 @@ local function checkpoint(data)
             currentCheckpointIndex = currCheckpoint + 1
             nextCheckpoint = currentCheckpointIndex
         end
-        
-        print(string.format("currentCheckpointIndex: %d, nextCheckpoint: %s, totalCheckpoints: %d", 
-                            currentCheckpointIndex, tostring(nextCheckpoint), totalCheckpoints))
-        
+
         if check == nextCheckpoint then
             print(string.format("Checkpoint %d reached correctly", check))
             currCheckpoint = check
             mSplitTimes[currentCheckpointIndex + 1] = in_race_time
             -- Play the checkpoint sound
             playCheckpointSound()
-            local message = string.format("Checkpoint %d/%d reached\nTime: %s\n%s",
-            currentCheckpointIndex + 1, totalCheckpoints, formatTime(in_race_time), formatTime(getDifference(raceName, currentCheckpointIndex)))
-            if races[raceName].displaySpeed then
-                message = message .. string.format("\nSpeed: %.2f Mph", math.abs(be:getObjectVelocityXYZ(data.subjectID) * speedUnit))
+            local checkpointMessage
+            if totalCheckpoints and totalCheckpoints > 1 then
+                checkpointMessage = string.format("Checkpoint %d/%d reached", 
+                    currentCheckpointIndex + 1, totalCheckpoints)
+            else
+                checkpointMessage = "Checkpoint reached"
             end
-            displayMessage(message, 7)
+        if races[raceName].displaySpeed then
+                checkpointMessage = checkpointMessage .. string.format("\nSpeed: %.2f Mph", math.abs(be:getObjectVelocityXYZ(data.subjectID) * speedUnit))
+            end
+            displayMessage(checkpointMessage, 7)
         else
             print(string.format("Checkpoint mismatch. Expected: %s, Got: %d", tostring(nextCheckpoint), check))
             local missedCheckpoints
@@ -674,6 +760,7 @@ local function exitCheckpoint(data)
         if Red then
             Red:setHidden(true)
         end
+        ActiveAssets.hideAllAssets()
         displayMessage("You exited the race zone, Race cancelled", 3)
     end
 end

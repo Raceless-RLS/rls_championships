@@ -698,7 +698,6 @@ local function checkpoint(data)
         end
 
         if check == nextCheckpoint then
-            displayAssets(data)
             print(string.format("Checkpoint %d reached correctly", check))
             currCheckpoint = check
             mSplitTimes[currentCheckpointIndex + 1] = in_race_time
@@ -706,15 +705,16 @@ local function checkpoint(data)
             playCheckpointSound()
             local checkpointMessage
             if totalCheckpoints and totalCheckpoints > 1 then
-                local message = string.format("Checkpoint %d/%d reached\nTime: %s\n%s",
-            currentCheckpointIndex + 1, totalCheckpoints, formatTime(in_race_time), formatTime(getDifference(raceName, currentCheckpointIndex)))
+                checkpointMessage = string.format("Checkpoint %d/%d reached\nTime: %s\n%s",
+                currentCheckpointIndex + 1, totalCheckpoints, formatTime(in_race_time), formatTime(getDifference(raceName, currentCheckpointIndex)))
             else
                 checkpointMessage = "Checkpoint reached"
             end
-        if races[raceName].displaySpeed then
+            if races[raceName].displaySpeed then
                 checkpointMessage = checkpointMessage .. string.format("\nSpeed: %.2f Mph", math.abs(be:getObjectVelocityXYZ(data.subjectID) * speedUnit))
             end
             displayMessage(checkpointMessage, 7)
+            displayAssets(data)
         else
             print(string.format("Checkpoint mismatch. Expected: %s, Got: %d", tostring(nextCheckpoint), check))
             local missedCheckpoints
@@ -760,12 +760,6 @@ local function exitCheckpoint(data)
         return
     end
     if data.event == "enter" and mActiveRace then
-        mActiveRace = nil
-        timerActive = false
-        mAltRoute = nil
-        mHotlap = nil
-        currCheckpoint = nil
-        mSplitTimes = {}
         local Green = scenetree.findObject(mActiveRace .. "_Green")
         local Red = scenetree.findObject(mActiveRace .. "_Red")
         if Green then
@@ -774,6 +768,12 @@ local function exitCheckpoint(data)
         if Red then
             Red:setHidden(true)
         end
+        mActiveRace = nil
+        timerActive = false
+        mAltRoute = nil
+        mHotlap = nil
+        currCheckpoint = nil
+        mSplitTimes = {}
         ActiveAssets.hideAllAssets()
         displayMessage("You exited the race zone, Race cancelled", 3)
     end

@@ -47,11 +47,14 @@ local maxActiveAssets = 2
 
 function ActiveAssets.new()
     local self = setmetatable({}, ActiveAssets)
-    self.assets = {}
+    self.assets = {}  -- Ensure this is always initialized as an empty table
     return self
 end
 
 function ActiveAssets:addAssetList(triggerName, newAssets)
+    if not self.assets then
+        self.assets = {}  -- Reinitialize if it's somehow nil
+    end
     -- Create a new asset list for this trigger
     local assetList = {
         triggerName = triggerName,
@@ -69,12 +72,21 @@ function ActiveAssets:addAssetList(triggerName, newAssets)
 end
 
 function ActiveAssets:hideAssetList(assetList)
-    for _, asset in ipairs(assetList.assets) do
-        asset:setHidden(true)
+    if assetList and assetList.assets then
+        for _, asset in ipairs(assetList.assets) do
+            if asset then
+                asset:setHidden(true)
+            end
+        end
     end
 end
 
 function ActiveAssets:hideAllAssets()
+    if not self.assets then
+        print("Warning: self.assets is nil in hideAllAssets")
+        self.assets = {}  -- Reinitialize if it's nil
+        return
+    end
     for _, assetList in ipairs(self.assets) do
         self:hideAssetList(assetList)
     end
@@ -82,6 +94,9 @@ function ActiveAssets:hideAllAssets()
 end
 
 function ActiveAssets:getOldestAssetList()
+    if not self.assets or #self.assets == 0 then
+        return nil
+    end
     return self.assets[1]
 end
 

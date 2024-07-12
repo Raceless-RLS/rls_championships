@@ -96,7 +96,7 @@ local function displayAssets(data)
 
     -- Unhide assets and add them to newAssets table
     for i = 0, maxAssets - 1 do
-        local assetName = triggerName .. "_asset" .. i
+        local assetName = triggerName .. "asset" .. i
         print("Searching for asset: " .. assetName)
         local asset = scenetree.findObject(assetName)
         if asset then

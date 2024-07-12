@@ -789,7 +789,7 @@ local function exitCheckpoint(data)
         mHotlap = nil
         currCheckpoint = nil
         mSplitTimes = {}
-        ActiveAssets.instance:hideAllAssets()
+        activeAssets:hideAllAssets()
         displayMessage("You exited the race zone, Race cancelled", 3)
     end
 end

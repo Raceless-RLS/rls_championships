@@ -783,9 +783,12 @@ local function routeInfo(data)
     if be:getPlayerVehicleID(0) ~= data.subjectID then
         return
     end
-    local raceName = getActivityName(data)
-    if races[raceName].altRoute and mActiveRace == raceName then
-        displayMessage(races[raceName].altRoute.altInfo, 10)
+    if data.event == "enter" then
+        local raceName = getActivityName(data)
+        if races[raceName].altRoute and mActiveRace == raceName then
+            displayMessage(races[raceName].altRoute.altInfo, 10)
+            displayAssets(data)
+        end 
     end
 end
 

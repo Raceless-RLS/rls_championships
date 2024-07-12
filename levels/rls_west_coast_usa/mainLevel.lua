@@ -685,7 +685,7 @@ local function checkpoint(data)
         end
 
         if check == nextCheckpoint then
-            displayAssets()
+            displayAssets(data)
             print(string.format("Checkpoint %d reached correctly", check))
             currCheckpoint = check
             mSplitTimes[currentCheckpointIndex + 1] = in_race_time
@@ -886,7 +886,7 @@ local function Greenlight(data)
 
     if currCheckpoint then
         if currCheckpoint + 1 == races[raceName].checkpoints then
-            displayAssets()
+            displayAssets(data)
             playCheckpointSound()
             print("Greenlight: Final checkpoint reached")
             timerActive = false
@@ -908,7 +908,7 @@ local function Greenlight(data)
     end
 
     if data.event == "enter" and staged == raceName then
-        displayAssets()
+        displayAssets(data)
         print("Greenlight: Enter event triggered and race is staged")
         timerActive = true
         in_race_time = 0

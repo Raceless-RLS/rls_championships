@@ -34,6 +34,11 @@ local leaderboard = {}
 local mSplitTimes = {}
 local mBestSplitTime = {}
 
+local leftTimeDigits = {}
+local rightTimeDigits = {}
+local leftSpeedDigits = {}
+local rightSpeedDigits = {}
+
 -- Function to check if career mode is active
 local function isCareerModeActive()
     return career_career.isActive()
@@ -53,8 +58,15 @@ local function loadLeaderboard()
     end
 end
 
+local function displayDragInfo()
+    
+end
+
 -- Function to save the leaderboard to the file in all autosave folders
 local function saveLeaderboard()
+    if not isCareerModeActive() then
+        return
+    end
     local saveSlot, savePath = career_saveSystem.getCurrentSaveSlot()
     print("saveSlot: " .. saveSlot)
     print("savePath: " .. savePath)
@@ -80,6 +92,86 @@ local function saveLeaderboard()
             print("Error: Unable to open leaderboard file for writing: " .. filePath)
         end
     end
+end
+
+local function updateDisplay(side, finishTime, finishSpeed)
+  local timeDisplayValue = {}
+  local speedDisplayValue = {}
+  local timeDigits = {}
+  local speedDigits = {}
+
+  if side == "r" then
+    timeDigits = rightTimeDigits
+    speedDigits = rightSpeedDigits
+  elseif side == "l" then
+    timeDigits = leftTimeDigits
+    speedDigits = leftSpeedDigits
+  end
+
+  if finishTime < 10 then
+    table.insert(timeDisplayValue, "empty")
+  end
+
+  if finishSpeed < 100 then
+    table.insert(speedDisplayValue, "empty")
+  end
+
+  -- Three decimal points for time
+  for num in string.gmatch(string.format("%.3f", finishTime), "%d") do
+    table.insert(timeDisplayValue, num)
+  end
+
+  -- Two decimal points for speed
+  for num in string.gmatch(string.format("%.2f", finishSpeed), "%d") do
+    table.insert(speedDisplayValue, num)
+  end
+
+  if #timeDisplayValue > 0 and #timeDisplayValue < 6 then
+    for i,v in ipairs(timeDisplayValue) do
+      timeDigits[i]:preApply()
+      timeDigits[i]:setField('shapeName', 0, "art/shapes/quarter_mile_display/display_".. v ..".dae")
+      timeDigits[i]:setHidden(false)
+      timeDigits[i]:postApply()
+    end
+  end
+
+  for i,v in ipairs(speedDisplayValue) do
+    speedDigits[i]:preApply()
+    speedDigits[i]:setField('shapeName', 0, "art/shapes/quarter_mile_display/display_".. v ..".dae")
+    speedDigits[i]:setHidden(false)
+    speedDigits[i]:postApply()
+  end
+end
+
+local function clearDisplay(digits)
+  for i=1, #digits do
+    digits[i]:setHidden(true)
+  end
+end
+
+local function resetDisplays()
+  clearDisplay(leftTimeDigits)
+  clearDisplay(rightTimeDigits)
+  clearDisplay(leftSpeedDigits)
+  clearDisplay(rightSpeedDigits)
+end
+
+local function initDisplays()
+  -- Creating a table for the TStatics that are being used to display drag time and final speed
+  for i=1, 5 do
+    local leftTimeDigit = scenetree.findObject("display_time_" .. i .. "_l")
+    table.insert(leftTimeDigits, leftTimeDigit)
+
+    local rightTimeDigit = scenetree.findObject("display_time_" .. i .. "_r")
+    table.insert(rightTimeDigits, rightTimeDigit)
+
+    local rightSpeedDigit = scenetree.findObject("display_speed_" .. i .. "_r")
+    table.insert(rightSpeedDigits, rightSpeedDigit)
+
+    local leftSpeedDigit = scenetree.findObject("display_speed_" .. i .. "_l")
+    table.insert(leftSpeedDigits, leftSpeedDigit)
+  end
+  resetDisplays()
 end
 
 local function formatTime(seconds)
@@ -323,6 +415,7 @@ local function payoutRace(data)
     end
     local raceName = getActivityName(data)
     if not isCareerModeActive() then
+        mActiveRace = nil
         local message = string.format("%s\nTime: %s", races[raceName].label, formatTime(in_race_time))
         displayMessage(message, 10)
         return 0
@@ -793,6 +886,10 @@ local function Yellowlight(data)
             displayMessage(message, 2)
             staged = nil
         else
+            if raceName == "drag" then
+                initDisplays()
+                resetDisplays()
+            end
             print("Yellowlight: Vehicle speed acceptable for staging")
             loadLeaderboard()
             print("Yellowlight: Leaderboard loaded")
@@ -845,8 +942,13 @@ local function Finishline(data)
         if currCheckpoint then
             if currCheckpoint + 1 == races[raceName].checkpoints then
                 timerActive = false
-                local reward = payoutRace(data)
                 currCheckpoint = nil
+                local reward = payoutRace(data)
+                if raceName == "drag" then
+                    local activityType = getActivityType(data)
+                    local side = string.sub(activityType, -1)  -- This gets the last character of the string
+                    updateDisplay(side, in_race_time, be:getObjectVelocityXYZ(data.subjectID) * speedUnit)
+                end
                 mSplitTimes = {}
                 mActiveRace = nil
                 in_race_time = 0

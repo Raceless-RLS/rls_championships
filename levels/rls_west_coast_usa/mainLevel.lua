@@ -235,6 +235,7 @@ local races = {
     mudDrag = {
         bestTime = 9,
         reward = 2000,
+        checkpoint = 1,
         label = "Mud Track"
     },
     drag = {
@@ -277,6 +278,7 @@ local races = {
     bnyHill = {
         bestTime = 30,
         reward = 3000,
+        checkpoint = 3,
         label = "Bunny Hill Climb"
     },
     track = {
@@ -933,6 +935,10 @@ local function Yellowlight(data)
                 print("Yellowlight: Yellow light shown")
             else
                 print("Yellowlight: Yellow light object not found")
+            end
+            local Redlight = scenetree.findObject(raceName .. '_Red')
+            if Redlight then
+                Redlight:setHidden(true)
             end
         end
     elseif data.event == "exit" then

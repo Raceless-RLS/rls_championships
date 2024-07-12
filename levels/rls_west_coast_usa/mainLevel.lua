@@ -157,17 +157,17 @@ local races = {
     },
     hillclimbl = {
         bestTime = 20,
-        reward = 7500,
+        reward = 5000,
         label = "Left Hill Climb"
     },
     hillclimbm = {
         bestTime = 15,
-        reward = 5000,
+        reward = 3000,
         label = "Middle Hill Climb"
     },
     hillclimbr = {
-        bestTime = 15,
-        reward = 2500,
+        bestTime = 12,
+        reward = 2000,
         label = "Right Hill Climb"
     },
     bnyHill = {
@@ -188,7 +188,7 @@ local races = {
             checkpoints = 14,
             hotlap = 95,
             altCheckpoints = {0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15, 16, 17},
-            altInfo = "Continue Left for Standard Track\nHair Pin Right for Short Track"
+            altInfo = "**Continue Left for Standard Track\nHair Pin Right for Short Track**"
         }
     },
     dirtCircuit = {
@@ -260,20 +260,20 @@ local function getActivityType(data)
     return activityType
 end
 
-local function isNewBestTime(raceName, in_race_time, isHotlap, isAltRoute)
+local function isNewBestTime(raceName, in_race_time)
     if not leaderboard[raceName] then
         return true
     end
 
     local currentBest
-    if isAltRoute then
-        if isHotlap then
+    if mAltRoute then
+        if mHotlap == raceName then
             currentBest = leaderboard[raceName].altRoute and leaderboard[raceName].altRoute.hotlapTime
         else
             currentBest = leaderboard[raceName].altRoute and leaderboard[raceName].altRoute.bestTime
         end
     else
-        if isHotlap then
+        if mHotlap == raceName then
             currentBest = leaderboard[raceName].hotlapTime
         else
             currentBest = leaderboard[raceName].bestTime
@@ -283,18 +283,18 @@ local function isNewBestTime(raceName, in_race_time, isHotlap, isAltRoute)
     return not currentBest or in_race_time < currentBest
 end
 
-local function getOldTime(raceName, isHotlap, isAltRoute)
+local function getOldTime(raceName)
     if not leaderboard[raceName] then
         return nil
     end
 
-    if isAltRoute then
+    if mAltRoute then
         if not leaderboard[raceName].altRoute then
             return nil
         end
-        return isHotlap and leaderboard[raceName].altRoute.hotlapTime or leaderboard[raceName].altRoute.bestTime
+        return mHotlap == raceName and leaderboard[raceName].altRoute.hotlapTime or leaderboard[raceName].altRoute.bestTime
     else
-        return isHotlap and leaderboard[raceName].hotlapTime or leaderboard[raceName].bestTime
+        return mHotlap == raceName and leaderboard[raceName].hotlapTime or leaderboard[raceName].bestTime
     end
 end
 
@@ -341,7 +341,8 @@ local function payoutRace(data)
         end
         -- Save the best time to the leaderboard
         loadLeaderboard()
-        local newBestTime = isNewBestTime(raceName, in_race_time, mHotlap == raceName, mAltRoute)
+        local oldTime = getOldTime(raceName) or 0
+        local newBestTime = isNewBestTime(raceName, in_race_time)
         if newBestTime then
             if not leaderboard[raceName] then
                 leaderboard[raceName] = {}
@@ -378,7 +379,6 @@ local function payoutRace(data)
         }, {
             label = label
         })
-        local oldTime = getOldTime(raceName, mHotlap == raceName, mAltRoute) or in_race_time
         local newBestTimeMessage = newBestTime and "Congratulations! New Best Time!\n" or ""
         local raceLabel = races[raceName].label
         if mAltRoute then

@@ -778,10 +778,10 @@ local function exitCheckpoint(data)
         local Green = scenetree.findObject(mActiveRace .. "_Green")
         local Red = scenetree.findObject(mActiveRace .. "_Red")
         if Green then
-            Green:setHidden(false)
+            Green:setHidden(true)
         end
         if Red then
-            Red:setHidden(true)
+            Red:setHidden(false)
         end
         mActiveRace = nil
         timerActive = false

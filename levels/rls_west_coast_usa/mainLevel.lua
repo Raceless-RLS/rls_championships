@@ -664,6 +664,14 @@ local function exitCheckpoint(data)
         mHotlap = nil
         currCheckpoint = nil
         mSplitTimes = {}
+        local Green = scenetree.findObject(mActiveRace .. "_Green")
+        local Red = scenetree.findObject(mActiveRace .. "_Red")
+        if Green then
+            Green:setHidden(false)
+        end
+        if Red then
+            Red:setHidden(true)
+        end
         displayMessage("You exited the race zone, Race cancelled", 3)
     end
 end
@@ -698,6 +706,18 @@ local function manageZone(data)
             currCheckpoint = nil
             mSplitTimes = {}
             displayMessage("You exited the race zone, Race cancelled", 2)
+            local Redlight = scenetree.findObject(raceName .. '_Red')
+            local Greenlight = scenetree.findObject(raceName .. '_Green')
+            local Yellowlight = scenetree.findObject(raceName .. '_Yellow')
+            if Redlight then
+                Redlight:setHidden(false)
+            end
+            if Greenlight then
+                Greenlight:setHidden(true)
+            end
+            if Yellowlight then
+                Yellowlight:setHidden(true)
+            end
         end
     end
 end
@@ -925,6 +945,10 @@ local function Yellowlight(data)
         else
             print("Yellowlight: Yellow light object not found")
         end
+        local Redlight = scenetree.findObject(raceName .. '_Red')
+        if Redlight then
+            Redlight:setHidden(false)
+        end
     end
 end
 
@@ -942,6 +966,7 @@ local function Finishline(data)
     local raceName = getActivityName(data)
     local Greenlight = scenetree.findObject(raceName .. '_Green')
     local Yellowlight = scenetree.findObject(raceName .. '_Yellow')
+    local Redlight = scenetree.findObject(raceName .. '_Red')
     if data.event == "enter" and mActiveRace == raceName then
         playCheckpointSound()
         if currCheckpoint then
@@ -969,6 +994,9 @@ local function Finishline(data)
         end
         if Greenlight then
             Greenlight:setHidden(true)
+        end
+        if Redlight then
+            Redlight:setHidden(false)
         end
     end
 end

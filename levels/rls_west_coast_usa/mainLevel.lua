@@ -685,6 +685,7 @@ local function checkpoint(data)
         end
 
         if check == nextCheckpoint then
+            displayAssets()
             print(string.format("Checkpoint %d reached correctly", check))
             currCheckpoint = check
             mSplitTimes[currentCheckpointIndex + 1] = in_race_time
@@ -884,8 +885,8 @@ local function Greenlight(data)
     local Yellowlight = scenetree.findObject(raceName .. '_Yellow')
 
     if currCheckpoint then
-        print("Greenlight: currCheckpoint =" .. currCheckpoint)
         if currCheckpoint + 1 == races[raceName].checkpoints then
+            displayAssets()
             playCheckpointSound()
             print("Greenlight: Final checkpoint reached")
             timerActive = false
@@ -901,10 +902,13 @@ local function Greenlight(data)
                 print("Greenlight: Hotlap started for" .. raceName)
             end
             return
+        else
+            exitCheckpoint(data)
         end
     end
 
     if data.event == "enter" and staged == raceName then
+        displayAssets()
         print("Greenlight: Enter event triggered and race is staged")
         timerActive = true
         in_race_time = 0

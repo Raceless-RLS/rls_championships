@@ -90,37 +90,50 @@ local activeAssets = ActiveAssets.new()
 
 -- Function to display assets
 local function displayAssets(data)
+    print("displayAssets function called with triggerName: " .. tostring(data.triggerName))
     local triggerName = data.triggerName
     local newAssets = {}
 
     -- Unhide assets and add them to newAssets table
     for i = 0, maxAssets - 1 do
         local assetName = triggerName .. "_asset" .. i
+        print("Searching for asset: " .. assetName)
         local asset = scenetree.findObject(assetName)
         if asset then
+            print("Asset found: " .. assetName)
             asset:setHidden(false)
             table.insert(newAssets, asset)
         else
+            print("Asset not found: " .. assetName)
             break  -- Stop if an asset is not found
         end
     end
 
     -- If no assets were found, return early
     if #newAssets == 0 then
+        print("No assets found for triggerName: " .. triggerName)
         return
     end
 
+    print("Number of new assets found: " .. #newAssets)
+
     -- Add the new asset list to activeAssets
+    print("Attempting to add new asset list to activeAssets")
     activeAssets:addAssetList(triggerName, newAssets)
 
     -- If we have reached the maximum number of active asset lists,
     -- we might want to do something with the oldest one
+    print("Number of active asset lists: " .. #activeAssets.assets)
     if #activeAssets.assets == maxActiveAssets then
+        print("Maximum number of active asset lists reached")
         local oldestAssetList = activeAssets:getOldestAssetList()
+        print("Oldest asset list triggerName: " .. oldestAssetList.triggerName)
         -- Here you can add code to clear or update the display of the oldest asset list
         -- For example:
         -- clearAssetListDisplay(oldestAssetList)
     end
+
+    print("displayAssets function completed")
 end
 
 -- Function to check if career mode is active
@@ -693,8 +706,8 @@ local function checkpoint(data)
             playCheckpointSound()
             local checkpointMessage
             if totalCheckpoints and totalCheckpoints > 1 then
-                checkpointMessage = string.format("Checkpoint %d/%d reached", 
-                    currentCheckpointIndex + 1, totalCheckpoints)
+                local message = string.format("Checkpoint %d/%d reached\nTime: %s\n%s",
+            currentCheckpointIndex + 1, totalCheckpoints, formatTime(in_race_time), formatTime(getDifference(raceName, currentCheckpointIndex)))
             else
                 checkpointMessage = "Checkpoint reached"
             end

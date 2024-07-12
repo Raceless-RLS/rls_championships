@@ -158,6 +158,11 @@ end
 
 local function initDisplays()
   -- Creating a table for the TStatics that are being used to display drag time and final speed
+
+  if #leftTimeDigits > 0 or #rightTimeDigits > 0 or #leftSpeedDigits > 0 or #rightSpeedDigits > 0 then
+    return
+  end
+
   for i=1, 5 do
     local leftTimeDigit = scenetree.findObject("display_time_" .. i .. "_l")
     table.insert(leftTimeDigits, leftTimeDigit)

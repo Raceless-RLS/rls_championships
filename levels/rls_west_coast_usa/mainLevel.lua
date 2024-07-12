@@ -945,9 +945,11 @@ local function Yellowlight(data)
         else
             print("Yellowlight: Yellow light object not found")
         end
-        local Redlight = scenetree.findObject(raceName .. '_Red')
-        if Redlight then
-            Redlight:setHidden(false)
+        if not mActiveRace then
+            local Redlight = scenetree.findObject(raceName .. '_Red')
+            if Redlight then
+                Redlight:setHidden(false)
+            end
         end
     end
 end

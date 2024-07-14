@@ -264,7 +264,7 @@
     "type":"branchLevel"
   },
   "startTrigger":{
-    "level":"west_coast_usa",
+    "level":"rls_west_coast_usa",
     "pos":[
       -851.2318115,
       274.9414978,

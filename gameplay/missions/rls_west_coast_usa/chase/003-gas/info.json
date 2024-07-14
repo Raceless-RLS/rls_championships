@@ -226,7 +226,7 @@
     "type":"missionPassed"
   },
   "startTrigger":{
-    "level":"west_coast_usa",
+    "level":"rls_west_coast_usa",
     "pos":[
       4.795141697,
       665.1773682,

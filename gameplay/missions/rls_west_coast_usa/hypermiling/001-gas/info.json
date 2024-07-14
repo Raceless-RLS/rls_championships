@@ -119,7 +119,7 @@
     "type":"always"
   },
   "startTrigger":{
-    "level":"west_coast_usa",
+    "level":"rls_west_coast_usa",
     "pos":[
       -410.9594421,
       165.8926239,

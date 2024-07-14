@@ -205,7 +205,7 @@
     "type":"multiOr"
   },
   "startTrigger":{
-    "level":"west_coast_usa",
+    "level":"rls_west_coast_usa",
     "pos":[
       458.9917297,
       -177.67099,

@@ -358,18 +358,18 @@ local races = {
         displaySpeed = true
     },
     rockcrawls = {
-        bestTime = 60,
-        reward = 10000,
+        bestTime = 35,
+        reward = 6000,
         label = "Left Rock Crawl"
     },
     rockcrawlm = {
-        bestTime = 80,
-        reward = 12500,
+        bestTime = 40,
+        reward = 4500,
         label = "Middle Rock Crawl"
     },
     rockcrawll = {
-        bestTime = 75,
-        reward = 15000,
+        bestTime = 35,
+        reward = 6000,
         label = "Right Rock Crawl"
     },
     hillclimbl = {
